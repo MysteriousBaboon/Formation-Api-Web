@@ -1,0 +1,55 @@
+<!-- ==========================================================
+     accueil.html — La page d'accueil
+     ==========================================================
+     {% extends "base.html" %} → cette page "hérite" du squelette
+     {% block contenu %}       → on remplace le bloc "contenu"
+     ========================================================== -->
+
+{% extends "base.html" %}
+
+{% block titre %}Accueil — Mon site Flask{% endblock %}
+
+{% block contenu %}
+
+    <h1>👋 Bienvenue sur mon premier site Flask !</h1>
+
+    <p>Ce site est un projet d'apprentissage. Voici ce que tu peux faire :</p>
+
+    <div class="card">
+        <h2>1. Essaye une URL dynamique</h2>
+        <p>
+            Tape dans la barre d'adresse :
+            <code>/salut/TonPrenom</code>
+        </p>
+        <p>
+            Par exemple :
+            <a href="/salut/Marie">/salut/Marie</a>
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>2. Utilise le formulaire</h2>
+        <!-- Le formulaire envoie les données à la route /formulaire en POST -->
+        <form action="/formulaire" method="POST">
+            <label for="prenom">Ton prénom :</label>
+            <input
+                type="text"
+                id="prenom"
+                name="prenom"
+                placeholder="Entre ton prénom..."
+                required
+            >
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>3. Teste l'API</h2>
+        <p>
+            Va sur :
+            <a href="/api/bonjour/Monde">/api/bonjour/Monde</a>
+            pour voir une réponse JSON.
+        </p>
+    </div>
+
+{% endblock %}

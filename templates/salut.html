@@ -1,0 +1,30 @@
+<!-- ==========================================================
+     salut.html — La page de salutation personnalisée
+     ==========================================================
+     La variable {{ prenom }} est passée par la fonction Python
+     dans app.py (via render_template).
+     ========================================================== -->
+
+{% extends "base.html" %}
+
+{% block titre %}Salut {{ prenom }} !{% endblock %}
+
+{% block contenu %}
+
+    <h1>🎉 Salut {{ prenom }} !</h1>
+
+    <p>Bienvenue sur cette page générée dynamiquement par Flask.</p>
+
+    <div class="card">
+        <h2>Comment ça marche ?</h2>
+        <p>
+            La route <code>/salut/&lt;prenom&gt;</code> dans <code>app.py</code>
+            a capturé le texte <strong>« {{ prenom }} »</strong> dans l'URL
+            et l'a envoyé à ce template HTML grâce à
+            <code>render_template()</code>.
+        </p>
+    </div>
+
+    <a href="/" class="btn">← Retour à l'accueil</a>
+
+{% endblock %}

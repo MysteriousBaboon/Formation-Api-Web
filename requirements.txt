@@ -1,0 +1,4 @@
+# Les dépendances du projet
+# Pour les installer : pip install -r requirements.txt
+
+flask       # Le framework web (le coeur du projet)

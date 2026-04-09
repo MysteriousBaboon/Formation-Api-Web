@@ -1,0 +1,39 @@
+<!-- ==========================================================
+     base.html — Le template de base (le "squelette" commun)
+     ==========================================================
+     Toutes les autres pages "héritent" de ce fichier.
+     Ça évite de copier-coller le <head>, le menu, etc. partout.
+     Les blocs {% block ... %} sont remplacés par chaque page.
+     ========================================================== -->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titre %}Mon site Flask{% endblock %}</title>
+
+    <!-- On charge le CSS depuis le dossier static/ -->
+    <!-- url_for('static', ...) génère le bon chemin automatiquement -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Barre de navigation simple -->
+    <nav>
+        <a href="/">🏠 Accueil</a>
+        <a href="/api/bonjour/Monde">🔌 Tester l'API</a>
+    </nav>
+
+    <!-- Contenu principal — chaque page remplit ce bloc -->
+    <main>
+        {% block contenu %}{% endblock %}
+    </main>
+
+    <!-- Pied de page -->
+    <footer>
+        <p>Fait avec ❤️ et Flask — Mon premier projet</p>
+    </footer>
+
+</body>
+</html>
