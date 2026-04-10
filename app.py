@@ -27,6 +27,11 @@ def accueil():
     # render_template() va chercher le fichier HTML dans le dossier templates/
     return render_template("accueil.html")
 
+@app.route("/bonjour")
+def bonjour():
+    """Affiche la page d'accueil."""
+    # render_template() va chercher le fichier HTML dans le dossier templates/
+    return render_template("bonjour.html")
 
 # ============================================================
 # ROUTE 2 : Une page avec un paramètre dans l'URL
