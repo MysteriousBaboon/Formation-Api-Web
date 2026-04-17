@@ -9,6 +9,7 @@
 # --- ÉTAPE 1 : Importer Flask ---
 # On importe les outils dont on a besoin depuis la librairie Flask
 from flask import Flask, render_template, request, jsonify
+from datetime import datetime
 
 # --- ÉTAPE 2 : Créer l'application ---
 # __name__ dit à Flask où trouver les fichiers du projet
@@ -20,18 +21,24 @@ app = Flask(__name__)
 # ============================================================
 # @app.route("/") signifie : "quand quelqu'un va sur http://127.0.0.1:5000/"
 # Flask appelle la fonction juste en-dessous.
-
 @app.route("/")
 def accueil():
     """Affiche la page d'accueil."""
     # render_template() va chercher le fichier HTML dans le dossier templates/
     return render_template("accueil.html")
 
-@app.route("/bonjour")
-def bonjour():
-    """Affiche la page d'accueil."""
-    # render_template() va chercher le fichier HTML dans le dossier templates/
-    return render_template("bonjour.html")
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+@app.route("/api/heure")
+def time():
+    maintenant = datetime.now()
+    return jsonify({
+        "heure": maintenant.strftime("%H:%M:%S"),
+        "date": maintenant.strftime("%d-%m-%Y"),
+        "iso": maintenant.isoformat(),
+    })
 
 # ============================================================
 # ROUTE 2 : Une page avec un paramètre dans l'URL
@@ -56,10 +63,12 @@ def salut(prenom):
 def traiter_formulaire():
     """Récupère le prénom envoyé par le formulaire de la page d'accueil."""
     # request.form["prenom"] récupère la valeur tapée dans le champ "prenom"
-    prenom = request.form["prenom"]
-
+    pomme = request.form["nom"]
+    age_flask = request.form["age"]
+    print(pomme)
+    print(age_flask)
     # On redirige vers la page /salut/Prénom
-    return render_template("salut.html", prenom=prenom)
+    return render_template("salut.html", prenom=pomme, age=age_flask)
 
 
 # ============================================================

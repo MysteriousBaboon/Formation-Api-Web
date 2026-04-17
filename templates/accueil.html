@@ -7,6 +7,10 @@
 
     <h1>👋 Bienvenue sur mon premier site Flask !</h1>
 
+    <img src="{{ url_for('static', filename='pin cte.jpeg') }}" alt="Photo de chat mignon">
+    <img src="{{ url_for('static', filename='Larry_le_Malicieux.webp') }}" alt="Photo">
+
+
     <p>Ce site est un projet d'apprentissage. Voici ce que tu peux faire :</p>
 
     <div class="card">
@@ -29,8 +33,17 @@
             <input
                 type="text"
                 id="prenom"
-                name="prenom"
+                name="nom"
                 placeholder="Entre ton prénom..."
+                required
+            >
+            <label for="age">Ton age :</label>
+            <input
+                type="number"
+                id="age"
+                name="age"
+                min="1"
+                max="26"
                 required
             >
             <button type="submit">Envoyer</button>

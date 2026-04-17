@@ -1,48 +1,26 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>{% block titre %}Mon site Flask{% endblock %}</title> -->
 
-{% block titre %}BONJOUR — Mon site Flask{% endblock %}
+    <!-- On charge le CSS depuis le dossier static/ -->
+    <!-- url_for('static', ...) génère le bon chemin automatiquement -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
 
-{% block contenu %}
+    <!-- Barre de navigation simple -->
+    <nav>
+        <a href="/">🏠 Accueil</a>
+        <a href="/api/bonjouCeci est un long texter/Monde">🔌 Tester l'API</a>
+    </nav>
 
-    <h1>👋 Bienvenue sur mon premier site Flask !</h1>
+    <main>
+        <p>Ceci est un long texte</p>
+        <b>Vous etes le {{ visitor }}</b>
+    </main>
 
-    <p>Ce site est un projet d'apprentissage. Voici ce que tu peux faire :</p>
-
-    <div class="card">
-        <h2>1. Essaye une URL dynamique</h2>
-        <p>
-            Tape dans la barre d'adresse :
-            <code>/salut/TonPrenom</code>
-        </p>
-        <p>
-            Par exemple :
-            <a href="/salut/Marie">/salut/Marie</a>
-        </p>
-    </div>
-
-    <div class="card">
-        <h2>2. Utilise le formulaire</h2>
-        <!-- Le formulaire envoie les données à la route /formulaire en POST -->
-        <form action="/formulaire" method="POST">
-            <label for="prenom">Ton prénom :</label>
-            <input
-                type="text"
-                id="prenom"
-                name="prenom"
-                placeholder="Entre ton prénom..."
-                required
-            >
-            <button type="submit">Envoyer</button>
-        </form>
-    </div>
-
-    <div class="card">
-        <h2>3. Teste l'API</h2>
-        <p>
-            Va sur :
-            <a href="/api/bonjour/Monde">/api/bonjour/Monde</a>
-            pour voir une réponse JSON.
-        </p>
-    </div>
-
-{% endblock %}
+</body>
+</html>

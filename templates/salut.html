@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block titre %}Salut {{ prenom }} !{% endblock %}
+{% block titre %}Salut {{ nom }} !{% endblock %}
 
 {% block contenu %}
 
-    <h1>🎉 Salut {{ prenom }} !</h1>
+    <h1>🎉 Salut {{ nom }} ! Tu a {{ age }} ans.</h1>
 
     <p>Bienvenue sur cette page générée dynamiquement par Flask.</p>
 
@@ -12,7 +12,7 @@
         <h2>Comment ça marche ?</h2>
         <p>
             La route <code>/salut/&lt;prenom&gt;</code> dans <code>app.py</code>
-            a capturé le texte <strong>« {{ prenom }} »</strong> dans l'URL
+            a capturé le texte <strong>« {{ nom }} »</strong> et <strong>« {{ age }} »</strong> dans l'URL
             et l'a envoyé à ce template HTML grâce à
             <code>render_template()</code>.
         </p>
