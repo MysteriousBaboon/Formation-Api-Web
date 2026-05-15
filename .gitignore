@@ -1,2 +1,4 @@
 
 .idea/
+cours_data/data/*
+*.xlsx
