@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Micro-service Python</title>
+  <style>
+    body {
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      max-width: 720px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #222;
+    }
+    h1 { font-size: 24px; }
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: ui-monospace, monospace;
+    }
+    pre {
+      background: #1e1e1e;
+      color: #e4e4e4;
+      padding: 14px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 13px;
+    }
+    .card {
+      background: #f7f7f7;
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+    .ok { color: #1a7f37; font-weight: 600; }
+    table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+    td, th { padding: 8px; border-bottom: 1px solid #ddd; text-align: left; }
+  </style>
+</head>
+<body>
+  <h1>🔌 Micro-service Python</h1>
+  <p class="ok">Le service tourne.</p>
+
+  <div class="card">
+    <strong>Statistiques</strong>
+    <table>
+      <tr><th>Appels traités</th><td>{{ compteur.appels }}</td></tr>
+      <tr><th>Dernier appel</th><td>{{ compteur.last_call or "—" }}</td></tr>
+    </table>
+  </div>
+
+  <h2>Endpoints disponibles</h2>
+  <table>
+    <tr><th>Méthode</th><th>Route</th><th>Auth ?</th></tr>
+    <tr><td>GET</td><td><code>/health</code></td><td>—</td></tr>
+    <tr><td>POST</td><td><code>/api/lead/score</code></td><td>Bearer</td></tr>
+    <tr><td>POST</td><td><code>/api/emails/clean</code></td><td>Bearer</td></tr>
+    <tr><td>POST</td><td><code>/api/stats</code></td><td>Bearer</td></tr>
+  </table>
+
+  <h2>Exemple d'appel</h2>
+<pre>curl -X POST http://127.0.0.1:5000/api/lead/score \
+  -H "Authorization: Bearer TON_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"nom": "Alice Dupont", "email": "alice@acme.com", "budget": 15000}'</pre>
+</body>
+</html>
