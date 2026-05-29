@@ -1,0 +1,11 @@
+mois,region,ventes,categorie
+Janvier,Nord,1200,phone
+Janvier,Sud,900,phone
+Fevrier,Nord,1500,phone
+Fevrier,Sud,1100,laptop
+Mars,Nord,1300,laptop
+Mars,Sud,1700,phone
+Avril,Nord,1800,laptop
+Avril,Sud,1400,phone
+Mai,Nord,2000,laptop
+Mai,Sud,1600,laptop
