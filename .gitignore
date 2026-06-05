@@ -5,3 +5,4 @@ cours_data/data/*
 .env
 
 *.pyc
+/_slides/
