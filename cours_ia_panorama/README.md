@@ -28,18 +28,6 @@ cours_ia_panorama/
 └── corriges/            ← éléments de réponse
 ```
 
-## 🗓️ Déroulé de journée conseillé
-
-> 🦿 **Format adapté** : je présente la théorie au tableau le matin, puis vous bossez
-> en autonomie l'après-midi. Tout est écrit pour être suivi **même sans moi**.
-
-| Moment | Quoi | Support |
-|---|---|---|
-| Matin (~1h) | Mini-cours au tableau | `slides/panorama.pptx` + `cours.md` |
-| Matin | Lecture tranquille | `cours.md` en entier + `glossaire.md` |
-| Après-midi | Exercices de réflexion en autonomie | `exos.md` |
-| Fin de journée | Mise en commun rapide | `corriges/` |
-
 ## 🚀 Pour démarrer
 
 Ce cours est surtout de la lecture. Pour (re)générer le diaporama :
