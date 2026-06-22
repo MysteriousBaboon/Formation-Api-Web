@@ -1,5 +1,5 @@
 # ============================================================
-# 5_mini_rag.py — Répondre à partir de TES documents (mini-RAG)
+# 5_mini_rag.py - Répondre à partir de TES documents (mini-RAG)
 # ============================================================
 # Un LLM ne connaît pas tes documents internes. Le RAG résout ça :
 #   1. CHERCHER le passage le plus pertinent dans tes docs
@@ -8,17 +8,30 @@
 #
 # Ici, la recherche se fait avec TF-IDF (similarité de mots) pour rester
 # simple et hors-ligne. Un vrai RAG utilise des "embeddings" (similarité
-# de SENS), mais le principe — retrouver puis donner au modèle — est identique.
+# de SENS), mais le principe - retrouver puis donner au modèle - est identique.
 #
 # Lancement :   python 5_mini_rag.py
 # ============================================================
 
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
+from openai import OpenAI
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from config import obtenir_client, demander
+# Lit la config écrite dans le fichier .env (placé à côté de ce script)
+load_dotenv(Path(__file__).resolve().parent / ".env")
 
-client, modele = obtenir_client()
+# Le client qui parle au LLM, via l'interface compatible OpenAI.
+# Par défaut on cible Anthropic (Claude) ; le .env peut pointer ailleurs
+# (OpenAI, Mistral, Ollama en local…) sans toucher au code.
+client = OpenAI(
+    base_url=os.getenv("LLM_BASE_URL"),
+    api_key=os.getenv("LLM_API_KEY"),
+)
+modele = os.getenv("LLM_MODEL")
 
 # ------------------------------------------------------------
 # 1. Notre "base de connaissances" (imagine un wiki interne)
@@ -63,7 +76,12 @@ def repondre(question):
         },
         {"role": "user", "content": f"CONTEXTE : {passage}\n\nQUESTION : {question}"},
     ]
-    print("   🤖", demander(client, modele, messages, temperature=0))
+    reponse = client.chat.completions.create(
+        model=modele,
+        messages=messages,
+        temperature=0,
+    )
+    print("   🤖", reponse.choices[0].message.content)
     print("-" * 60)
 
 

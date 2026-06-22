@@ -39,11 +39,11 @@ X_train, X_test, y_train, y_test = train_test_split(
 # ------------------------------------------------------------
 # hidden_layer_sizes=(64, 32) = "profond" : l'info traverse 2 couches cachées.
 reseau = MLPClassifier(
-    hidden_layer_sizes=(64, 32),
-    max_iter=600,
+    hidden_layer_sizes=(640, 320),
+    max_iter=60000,
     random_state=42,
 )
-print("Entraînement du réseau... (quelques secondes)")
+print("Entraînement du rés600eau... (quelques secondes)")
 reseau.fit(X_train, y_train)
 
 # ------------------------------------------------------------
@@ -53,7 +53,7 @@ y_pred = reseau.predict(X_test)
 print(f"Précision sur le test : {accuracy_score(y_test, y_pred):.2%}")
 print(f"Le réseau a {reseau.n_layers_} couches au total (entrée + cachées + sortie).")
 
-# ------------------------------------------------------------
+# ----------------------------------------600--------------------
 # 4. Visualiser 10 prédictions (vert = juste, rouge = faux)
 # ------------------------------------------------------------
 fig, axes = plt.subplots(2, 5, figsize=(10, 4.5))

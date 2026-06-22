@@ -1,4 +1,4 @@
-# Exercices — Les LLM (≈ 3h, en autonomie)
+# Exercices - Les LLM (≈ 3h, en autonomie)
 
 > Format adapté : aujourd'hui on pratique. Configure d'abord ton `.env` (voir README),
 > puis déroule les démos `1` à `5` et les exercices ci-dessous. Corrigés dans `corriges/`.
@@ -7,7 +7,7 @@
 
 ---
 
-## Exercice 0 — Configuration (15 min)
+## Exercice 0 - Configuration (15 min)
 
 1. `cp .env.example .env`, puis remplis-le (service en ligne ou Ollama local).
 2. Lance `python 1_premier_appel.py`. Tu obtiens une réponse ?
@@ -17,7 +17,7 @@
 
 ---
 
-## Exercice 1 — Sentir la génération (20 min)
+## Exercice 1 - Sentir la génération (20 min)
 
 À partir de `1_premier_appel.py` :
 
@@ -28,7 +28,7 @@
 
 ---
 
-## Exercice 2 — Le pouvoir du prompt (30 min)
+## Exercice 2 - Le pouvoir du prompt (30 min)
 
 À partir de `2_prompting.py` :
 
@@ -39,7 +39,7 @@
 
 ---
 
-## Exercice 3 — JSON exploitable (35 min)
+## Exercice 3 - JSON exploitable (35 min)
 
 À partir de `3_sortie_structuree_json.py` :
 
@@ -52,7 +52,7 @@
 
 ---
 
-## Exercice 4 — La mémoire d'un chat (25 min)
+## Exercice 4 - La mémoire d'un chat (25 min)
 
 À partir de `4_conversation_memoire.py` :
 
@@ -64,7 +64,7 @@
 
 ---
 
-## Exercice 5 — Ton premier RAG (40 min)
+## Exercice 5 - Ton premier RAG (40 min)
 
 À partir de `5_mini_rag.py` :
 
@@ -87,4 +87,4 @@
 - [ ] Je comprends qu'un LLM n'a pas de mémoire (on rejoue l'historique) (exo 4)
 - [ ] J'ai construit un mini-RAG sur mes propres documents (exo 5)
 
-> Si tout est coché, place au bouquet final : Cours 12 — Agents LLM.
+> Si tout est coché, place au bouquet final : Cours 12 - Agents LLM.

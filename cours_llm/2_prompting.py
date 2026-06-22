@@ -1,5 +1,5 @@
 # ============================================================
-# 2_prompting.py — Rôle système, few-shot, température
+# 2_prompting.py - Rôle système, few-shot, température
 # ============================================================
 # La même question peut donner des réponses très différentes selon
 # COMMENT on la pose. On illustre trois leviers :
@@ -10,9 +10,23 @@
 # Lancement :   python 2_prompting.py
 # ============================================================
 
-from config import obtenir_client, demander
+import os
+from pathlib import Path
 
-client, modele = obtenir_client()
+from dotenv import load_dotenv
+from openai import OpenAI
+
+# Lit la config écrite dans le fichier .env (placé à côté de ce script)
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
+# Le client qui parle au LLM, via l'interface compatible OpenAI.
+# Par défaut on cible Anthropic (Claude) ; le .env peut pointer ailleurs
+# (OpenAI, Mistral, Ollama en local…) sans toucher au code.
+client = OpenAI(
+    base_url=os.getenv("LLM_BASE_URL"),
+    api_key=os.getenv("LLM_API_KEY"),
+)
+modele = os.getenv("LLM_MODEL")
 
 # ------------------------------------------------------------
 # 1. Le rôle "system" change tout
@@ -30,7 +44,12 @@ for personnalite in [
         {"role": "user", "content": question},
     ]
     print(f"[system] {personnalite}")
-    print("🤖", demander(client, modele, messages, temperature=0.7))
+    reponse = client.chat.completions.create(
+        model=modele,
+        messages=messages,
+        temperature=0.7,
+    )
+    print("🤖", reponse.choices[0].message.content)
     print("-" * 60)
 
 # ------------------------------------------------------------
@@ -48,19 +67,31 @@ messages = [
     {"role": "user", "content": "salade"},   # à lui de jouer
 ]
 print("Plat : salade")
-print("🤖", demander(client, modele, messages, temperature=0))
+reponse = client.chat.completions.create(
+    model=modele,
+    messages=messages,
+    temperature=0,
+)
+print("🤖", reponse.choices[0].message.content)
 
 # ------------------------------------------------------------
-# 3. La température : fiabilité (0) vs créativité (1.2)
+# 3. La température : fiabilité (0) vs créativité (1.0)
 # ------------------------------------------------------------
-print("\n=== 3. Température : 0 (stable) vs 1.2 (créatif) ===\n")
+# Note : chez Anthropic (Claude), la température va de 0 à 1.0. D'autres
+# fournisseurs (OpenAI…) montent jusqu'à 2. On reste à 1.0 pour rester portable.
+print("\n=== 3. Température : 0 (stable) vs 1.0 (créatif) ===\n")
 
 messages = [
     {"role": "user", "content": "Invente un nom de start-up qui vend du café."},
 ]
-for temp in [0, 1.2]:
+for temp in [0, 1.0]:
     print(f"température = {temp}")
-    print("🤖", demander(client, modele, messages, temperature=temp))
+    reponse = client.chat.completions.create(
+        model=modele,
+        messages=messages,
+        temperature=temp,
+    )
+    print("🤖", reponse.choices[0].message.content)
     print("-" * 60)
 
 # ------------------------------------------------------------
@@ -68,4 +99,4 @@ for temp in [0, 1.2]:
 # ------------------------------------------------------------
 # 1. Ajoute une 3e personnalité (ex. "Tu es un pirate"). L'effet est-il net ?
 # 2. Dans le few-shot, retire les 2 exemples : le modèle répond-il encore en émojis ?
-# 3. Lance plusieurs fois la partie 3 : la réponse à température=0 bouge-t-elle ? Et à 1.2 ?
+# 3. Lance plusieurs fois la partie 3 : la réponse à température=0 bouge-t-elle ? Et à 1.0 ?

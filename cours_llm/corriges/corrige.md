@@ -1,11 +1,11 @@
-# Corrigés — Les LLM
+# Corrigés - Les LLM
 
 > Les réponses d'un LLM varient d'un modèle et d'une exécution à l'autre. On corrige donc
 > le raisonnement, pas le texte exact. Un corrigé de code est dans `corriges/exo_3_avis.py`.
 
 ---
 
-## Exercice 1 — Sentir la génération
+## Exercice 1 - Sentir la génération
 
 1. Les réponses diffèrent (souvent) : la température par défaut (> 0) introduit de l'aléatoire
    dans le choix du token suivant.
@@ -15,7 +15,7 @@
 
 ---
 
-## Exercice 2 — Le pouvoir du prompt
+## Exercice 2 - Le pouvoir du prompt
 
 1. La personnalité « pirate » change nettement le style : le message system cadre tout.
 2. Sans les exemples, le modèle risque de répondre en texte normal au lieu d'émojis : le
@@ -25,7 +25,7 @@
 
 ---
 
-## Exercice 3 — JSON exploitable
+## Exercice 3 - JSON exploitable
 
 1. Sur un avis positif, `sentiment` passe à `"positif"` et `note` monte (4-5).
 2. Le champ `"urgence"` est rempli si la consigne est claire ; `temperature=0` fiabilise le format.
@@ -34,9 +34,9 @@
 
 ---
 
-## Exercice 4 — La mémoire d'un chat
+## Exercice 4 - La mémoire d'un chat
 
-1. Il se souvient car on lui renvoie tout l'historique à chaque appel — la mémoire n'est pas
+1. Il se souvient car on lui renvoie tout l'historique à chaque appel - la mémoire n'est pas
    « dans » le modèle, elle est dans notre liste `historique`.
 2. En retirant l'ajout des réponses de l'assistant, il perd le fil : il ne voit plus ce qu'il
    a déjà dit, les réponses deviennent incohérentes.
@@ -45,7 +45,7 @@
 
 ---
 
-## Exercice 5 — Ton premier RAG
+## Exercice 5 - Ton premier RAG
 
 1. Pour la « couleur préférée du PDG », le modèle doit répondre qu'il ne sait pas (l'info n'est
    pas dans le contexte). C'est le bon comportement : on lui a demandé de s'appuyer uniquement

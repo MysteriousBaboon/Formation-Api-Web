@@ -1,6 +1,6 @@
 # ============================================================
 # cours_llm/slides/contenu.py
-# Contenu des slides du Cours 11 — Les LLM
+# Contenu des slides du Cours 11 - Les LLM
 # ============================================================
 # Modifier : édite les listes, puis relance :  python slides/contenu.py
 # ============================================================
@@ -22,7 +22,7 @@ def construire():
     slide_titre(
         prs,
         "Les LLM",
-        "Cours 11 — Comprendre et piloter les grands modèles de langage",
+        "Cours 11 - Comprendre et piloter les grands modèles de langage",
     )
 
     # 1
@@ -77,7 +77,7 @@ def construire():
         "Rôles : system (le cadre), user (la demande), assistant (ses réponses)",
         "Être précis : format, longueur, ton",
         "Few-shot : donner 2-3 exemples guide énormément",
-        "Température : 0 = fiable/stable, 1.2 = créatif",
+        "Température : 0 = fiable/stable, 1.0 = créatif (max 1.0 chez Claude)",
     ])
 
     # 7
@@ -92,9 +92,9 @@ def construire():
     # 8
     slide_section(prs, "8. L'appeler par code (agnostique)")
     slide_puces(prs, "Un seul code, tous les fournisseurs", [
-        "Interface compatible OpenAI partout",
+        "Interface compatible OpenAI partout (Anthropic compris)",
         "client.chat.completions.create(model, messages, temperature)",
-        "Le .env choisit : OpenAI, Mistral, ou Ollama LOCAL (gratuit)",
+        "Le .env choisit : Anthropic (Claude), OpenAI, ou Ollama LOCAL",
         "Changer de fournisseur = changer le .env, pas le code",
     ])
 

@@ -1,4 +1,4 @@
-# Cours — Les LLM : comprendre et utiliser
+# Cours - Les LLM : comprendre et utiliser
 
 > Un LLM (Large Language Model) est un gigantesque réseau de neurones entraîné à prédire le mot suivant. De cette idée simple sort tout le reste : conversation, traduction, code, raisonnement. Ce cours explique le « comment », puis te met aux commandes.
 
@@ -62,7 +62,40 @@ relation les uns avec les autres. (Pas besoin des maths ici : retiens l'idée de
 
 ---
 
-## 5. Comment on l'entraîne (survol)
+## 5. Plus gros sans exploser le coût : le Mixture of Experts (MoE)
+
+Comment fait-on des modèles toujours plus « savants » sans que chaque réponse coûte une
+fortune en calcul ? L'astuce des plus grands modèles récents (Mixtral, GPT-4, DeepSeek…)
+s'appelle le **Mixture of Experts** (MoE), littéralement « mélange d'experts ».
+
+> Au lieu d'un seul gros réseau qui traite chaque token, le modèle contient plusieurs
+> sous-réseaux spécialisés, les **experts**. Pour chaque token, un petit aiguilleur (le
+> *router*) choisit les 2 ou 3 experts les plus pertinents - et ignore tous les autres.
+
+Image : plutôt qu'un seul généraliste qui répond à tout, un cabinet de spécialistes où une
+secrétaire oriente chaque question vers les bons médecins. On ne dérange que ceux qu'il faut.
+
+Le gain est dans cette distinction :
+
+| | Modèle « dense » classique | Modèle MoE |
+|---|---|---|
+| Paramètres stockés | N | Beaucoup plus que N |
+| Paramètres activés par token | Tous | Une petite fraction |
+| Coût de calcul | Élevé | Réduit, à qualité égale |
+
+Le modèle a donc énormément de paramètres au total (il « sait » beaucoup de choses), mais
+n'en allume qu'une petite partie à chaque token (il calcule peu).
+
+> Concrètement, un MoE peut avoir la « culture » d'un modèle de 100 milliards de paramètres
+> pour un coût de calcul proche d'un modèle de 15 milliards. C'est pour ça que la plupart des
+> modèles de pointe récents sont des MoE.
+
+À retenir : **beaucoup de connaissances stockées, peu de calcul dépensé par token**, grâce à
+un aiguillage vers quelques experts.
+
+---
+
+## 6. Comment on l'entraîne (survol)
 
 Trois grandes phases :
 
@@ -78,7 +111,7 @@ Trois grandes phases :
 
 ---
 
-## 6. La fenêtre de contexte
+## 7. La fenêtre de contexte
 
 C'est la quantité de texte que le modèle peut « voir » d'un coup (prompt + réponse), mesurée
 en tokens.
@@ -93,7 +126,7 @@ en tokens.
 
 ---
 
-## 7. Le prompting : bien parler au modèle
+## 8. Le prompting : bien parler au modèle
 
 La qualité de la réponse dépend énormément de la question. Quelques principes.
 
@@ -114,7 +147,7 @@ Un appel LLM se compose de messages, chacun avec un rôle :
 
 ---
 
-## 8. Les paramètres : la température
+## 9. Les paramètres : la température
 
 Quand le modèle choisit le token suivant, la **température** règle son audace :
 
@@ -126,10 +159,13 @@ Quand le modèle choisit le token suivant, la **température** règle son audace
 
 > Pour une tâche où tu veux des résultats fiables et reproductibles (extraire un JSON,
 > classer un avis), mets `temperature=0`.
+>
+> La température maximale dépend du fournisseur : **1.0 chez Anthropic (Claude)**,
+> jusqu'à 2 chez OpenAI. Les démos restent à 1.0 pour fonctionner partout.
 
 ---
 
-## 9. Les limites (à ne jamais oublier)
+## 10. Les limites (à ne jamais oublier)
 
 - Hallucinations : invente avec aplomb. Toujours vérifier les faits, chiffres, citations.
 - Cutoff : ses connaissances s'arrêtent à une date. Il ignore l'actualité récente.
@@ -138,14 +174,14 @@ Quand le modèle choisit le token suivant, la **température** règle son audace
 - Biais et confidentialité : il reflète ses données ; n'y colle pas de secrets sans précaution.
 
 > La parade à plusieurs de ces limites : lui donner des outils et des documents.
-> C'est le RAG (§11) et les agents (cours 12).
+> C'est le RAG (§12) et les agents (cours 12).
 
 ---
 
-## 10. Appeler un LLM par code (agnostique)
+## 11. Appeler un LLM par code (agnostique)
 
-Tous les fournisseurs majeurs exposent la même interface (compatible OpenAI). D'où un code
-unique qui marche partout, piloté par le `.env` :
+Tous les fournisseurs majeurs exposent la même interface (compatible OpenAI), Anthropic
+compris. D'où un code unique qui marche partout, piloté par le `.env` :
 
 ```python
 from openai import OpenAI
@@ -162,14 +198,15 @@ reponse = client.chat.completions.create(
 print(reponse.choices[0].message.content)
 ```
 
-Change le `.env` (OpenAI ↔ Mistral ↔ Ollama local) : le code ne bouge pas. C'est exactement
+Change le `.env` (Anthropic ↔ OpenAI ↔ Ollama local) : le code ne bouge pas. C'est exactement
 l'esprit de l'API unifiée de scikit-learn, mais pour les LLM.
 
-> `config.py` lit le `.env` et te donne le client tout prêt. Les démos 1 à 5 l'utilisent.
+> Chaque démo (1 à 6) lit elle-même le `.env` et crée son client en quelques lignes, tout
+> en haut du fichier — rien n'est caché dans un fichier annexe : tu vois l'appel au LLM en entier.
 
 ---
 
-## 11. Le RAG : donner des documents au modèle
+## 12. Le RAG : donner des documents au modèle
 
 Un LLM ne connaît pas tes documents (ton wiki interne, tes PDF…). Le **RAG**
 (*Retrieval-Augmented Generation*) résout ça :
@@ -183,15 +220,16 @@ Question  →  [1. Chercher les passages pertinents dans TES docs]
 Avantages : réponses à jour, sourcées, et moins d'hallucinations (le modèle s'appuie
 sur du concret). C'est la technique la plus utilisée en entreprise.
 
-> La démo `5_mini_rag.py` en fait une version minimale : on retrouve le bon passage, puis on
-> le donne au LLM. (La vraie recherche se fait avec des *embeddings* ; on en montre l'idée.)
+> La démo `5_mini_rag.py` en fait une version minimale : on retrouve le bon passage (par
+> similarité de *mots*, avec TF-IDF), puis on le donne au LLM. La démo `6_embeddings.py` montre
+> l'étage du dessus : la similarité de *sens* avec de vrais *embeddings*.
 
 ---
 
-## 12. Aller plus loin
+## 13. Aller plus loin
 
 - Embeddings : transformer un texte en vecteur de nombres pour mesurer la similarité de
-  sens (le cœur d'un vrai RAG).
+  sens (le cœur d'un vrai RAG). → tu en fais l'expérience dans la démo `6_embeddings.py`.
 - Sortie structurée : forcer du JSON pour brancher le LLM dans un programme (démo 3).
 - Streaming : afficher la réponse au fur et à mesure (meilleure UX).
 - Coûts : surveille tes tokens ; préfère un petit modèle quand il suffit.

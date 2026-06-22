@@ -1,19 +1,28 @@
 # ============================================================
-# corriges/exo_3_avis.py — Analyseur d'avis automatique (exo 3.3)
+# corriges/exo_3_avis.py - Analyseur d'avis automatique (exo 3.3)
 # ============================================================
 # On boucle sur une liste d'avis, on demande un JSON pour chacun,
 # on le parse, et on affiche un mini-rapport.
 # ============================================================
 
 import json
-import sys
+import os
 from pathlib import Path
 
-# Rendre config.py (dossier parent) importable depuis corriges/
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from config import obtenir_client, demander
+from dotenv import load_dotenv
+from openai import OpenAI
 
-client, modele = obtenir_client()
+# Lit la config écrite dans le .env du dossier parent (cours_llm/.env)
+load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+
+# Le client qui parle au LLM, via l'interface compatible OpenAI.
+# Par défaut on cible Anthropic (Claude) ; le .env peut pointer ailleurs
+# (OpenAI, Mistral, Ollama en local…) sans toucher au code.
+client = OpenAI(
+    base_url=os.getenv("LLM_BASE_URL"),
+    api_key=os.getenv("LLM_API_KEY"),
+)
+modele = os.getenv("LLM_MODEL")
 
 AVIS = [
     "Livraison rapide mais le produit est arrivé cassé, très déçu.",
@@ -29,14 +38,15 @@ CONSIGNE = (
 
 
 def analyser(avis):
-    texte = demander(
-        client, modele,
-        [
+    reponse = client.chat.completions.create(
+        model=modele,
+        messages=[
             {"role": "system", "content": CONSIGNE},
             {"role": "user", "content": avis},
         ],
         temperature=0,
     )
+    texte = reponse.choices[0].message.content
     propre = texte.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
     return json.loads(propre)
 

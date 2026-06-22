@@ -1,5 +1,5 @@
 # ============================================================
-# 4_conversation_memoire.py — Un mini-chat qui se SOUVIENT
+# 4_conversation_memoire.py - Un mini-chat qui se SOUVIENT
 # ============================================================
 # Un LLM n'a AUCUNE mémoire entre deux appels. La "mémoire" d'un chat,
 # c'est juste l'historique des messages qu'on lui RENVOIE à chaque fois.
@@ -9,9 +9,23 @@
 # (tape 'quit' pour sortir)
 # ============================================================
 
-from config import obtenir_client
+import os
+from pathlib import Path
 
-client, modele = obtenir_client()
+from dotenv import load_dotenv
+from openai import OpenAI
+
+# Lit la config écrite dans le fichier .env (placé à côté de ce script)
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
+# Le client qui parle au LLM, via l'interface compatible OpenAI.
+# Par défaut on cible Anthropic (Claude) ; le .env peut pointer ailleurs
+# (OpenAI, Mistral, Ollama en local…) sans toucher au code.
+client = OpenAI(
+    base_url=os.getenv("LLM_BASE_URL"),
+    api_key=os.getenv("LLM_API_KEY"),
+)
+modele = os.getenv("LLM_MODEL")
 
 # ------------------------------------------------------------
 # L'historique : LA mémoire de la conversation
@@ -56,6 +70,6 @@ while True:
 # 1. Présente-toi (ton prénom), discute, puis demande "comment je m'appelle ?".
 #    Il s'en souvient grâce à l'historique.
 # 2. Commente la ligne "historique.append(...assistant...)" : que se passe-t-il ?
-#    (il perd le fil — il ne voit plus ses propres réponses)
+#    (il perd le fil - il ne voit plus ses propres réponses)
 # 3. Compte les messages : à long terme, l'historique grossit → ça coûte plus de tokens.
 #    (les vrais chats "résument" les vieux messages pour économiser)
