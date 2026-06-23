@@ -174,7 +174,6 @@ cours où la notion est abordée. Termes triés alphabétiquement dans chaque ca
 
 ## Automatisation et planification
 
-- **APScheduler** — Librairie Python robuste pour planifier des tâches. _(Cron)_
 - **Automatisation** — Faire exécuter une tâche par la machine, sans intervention humaine. _(Cron)_
 - **cron** — Standard Unix/Linux pour planifier l'exécution de tâches. _(Cron)_
 - **crontab** — La table où sont déclarées les tâches cron d'un système. _(Cron)_
