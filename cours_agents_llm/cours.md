@@ -92,7 +92,88 @@ Un outil est **n'importe quelle fonction Python**. Les plus courants :
 
 ---
 
-## 5. Mémoire & orchestration
+## 5. MCP — sortir les outils du script
+
+Dans les sections précédentes, chaque agent **recode ses outils dans son propre script**
+(`REGISTRE` + `OUTILS`). Deux limites : si tu as trois applis, tu réécris **trois fois** l'outil
+météo ; et ces outils ne servent **qu'à ton agent**. Le **MCP** règle exactement ça.
+
+> **MCP** (*Model Context Protocol*) : un **protocole standard** pour brancher des outils et des
+> données sur un LLM. Créé par **Anthropic fin 2024**, il est aujourd'hui adopté très largement
+> (Anthropic, OpenAI, Google…). L'image consacrée : **« le port USB-C de l'IA »** — une prise
+> universelle. Avant : chaque intégration était du sur-mesure. Avec MCP : tu écris l'outil **une
+> fois**, et **n'importe quel client compatible** (Claude Desktop, Claude Code, Cursor…) le branche.
+
+### L'architecture : hôte → client → serveur
+
+```
+   HÔTE  (l'appli : Claude Desktop, Claude Code, ou TON client)
+     │  contient un ou plusieurs…
+     ▼
+   CLIENT ───[ protocole MCP ]───▶  SERVEUR  ──▶ outils / données
+   (1 par serveur)                  (ton code, ou un serveur tout fait)
+
+   Transport :
+     • stdio  → serveur LOCAL lancé en sous-processus (le plus courant)
+     • HTTP   → serveur DISTANT (une simple URL)
+```
+
+- L'**hôte** est l'application qui parle à l'utilisateur et au LLM.
+- Le **serveur** expose des capacités. Il peut être **le tien** (démo `6`) ou un serveur **déjà
+  existant** : il en existe des centaines (GitHub, Slack, Postgres, système de fichiers, navigateur…).
+
+### Ce qu'un serveur MCP expose
+
+| Capacité | C'est quoi | On l'a déjà croisé ? |
+|---|---|---|
+| **Tools** (outils) | Des fonctions que le LLM peut appeler | Oui : le tool calling de la §3, mais l'outil vit **dehors** |
+| **Resources** | Des données que le modèle peut lire (fichier, ligne de BDD…) | C'est l'idée du RAG (cours 11), exposée proprement |
+| **Prompts** | Des modèles de prompts réutilisables | Des prompts « prêts à l'emploi » fournis par le serveur |
+
+> 💡 **Le lien avec le cours.** Un outil MCP, c'est *exactement* le tool calling de la §3 — mais
+> l'outil est **sorti du script** pour vivre derrière une prise standard. C'est à l'outil ce que
+> **le micro-service du cours 3** est à une simple fonction : on l'externalise pour le rendre
+> **réutilisable et partageable**.
+
+### Brancher un serveur — deux façons
+
+**1) Sans code, dans un vrai client** (Claude Desktop, Claude Code…). On déclare le serveur dans un
+fichier de config JSON ; le client **découvre ses outils tout seul** :
+
+```json
+{
+  "mcpServers": {
+    "mes-outils": {
+      "command": "python",
+      "args": ["6_serveur_mcp.py"]
+    }
+  }
+}
+```
+
+> (En vrai, mets le **chemin absolu** vers le `python` de ton venv et vers le script.)
+
+**2) En Python**, avec le SDK `mcp` : un client qui lance le serveur, **liste** ses outils et les
+**appelle**. C'est ce que fait la démo `7`, qui rebranche ces outils dans la **boucle d'agent de la
+démo 4** :
+
+```
+démo 6 (serveur)              démo 7 (client + agent)
+  @mcp.tool() calculer  ──▶   list_tools()  ──▶  tools= envoyés au LLM
+  @mcp.tool() meteo           call_tool()   ◀──  le LLM demande un outil
+```
+
+L'**aha** : à la démo 4, l'agent exécutait l'outil lui-même (`REGISTRE[nom](**args)`). À la démo 7,
+il **délègue** l'exécution au serveur MCP (`session.call_tool(...)`). Le LLM, lui, ne voit **aucune
+différence** : pour lui, c'est toujours du tool calling.
+
+> ⚠️ **Garde-fou (voir §7).** Un serveur MCP, c'est du **code qui s'exécute chez toi** et qui peut
+> agir ou lire tes données. N'installe que des serveurs **de confiance**, et garde la **validation
+> humaine** pour les actions sensibles.
+
+---
+
+## 6. Mémoire & orchestration
 
 - **Mémoire courte** : l'historique de la conversation (comme au cours 11).
 - **Mémoire longue** : stocker des faits dans une base / un fichier, et les ressortir via un outil
@@ -103,7 +184,7 @@ Un outil est **n'importe quelle fonction Python**. Les plus courants :
 
 ---
 
-## 6. Les garde-fous (indispensables)
+## 7. Les garde-fous (indispensables)
 
 Un agent qui boucle et agit dans le monde réel, ça se **sécurise** :
 
@@ -121,7 +202,7 @@ Un agent qui boucle et agit dans le monde réel, ça se **sécurise** :
 
 ---
 
-## 7. Le paysage des frameworks
+## 8. Le paysage des frameworks
 
 Tu peux tout coder à la main (c'est ce qu'on fait ici, pour comprendre). En pratique, on
 s'appuie souvent sur un framework :
@@ -138,7 +219,7 @@ s'appuie souvent sur un framework :
 
 ---
 
-## 8. Aller plus loin
+## 9. Aller plus loin
 
 - **Streaming + UI** : afficher le raisonnement de l'agent en direct.
 - **Agents multiples** : un « chef » qui délègue à des agents spécialisés.

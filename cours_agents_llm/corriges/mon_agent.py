@@ -7,14 +7,27 @@
 # ============================================================
 
 import json
+import os
 import sys
 from pathlib import Path
 
+from dotenv import load_dotenv
+from openai import OpenAI
+
+# Rend le dossier parent importable (pour outils.py) et lit son .env
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from config import obtenir_client
 from outils import calculer
 
-client, modele = obtenir_client()
+load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+
+# Le client qui parle au LLM, via l'interface compatible OpenAI.
+# Par défaut on cible Anthropic (Claude) ; le .env peut pointer ailleurs
+# (OpenAI, Mistral, Ollama en local…) sans toucher au code.
+client = OpenAI(
+    base_url=os.getenv("LLM_BASE_URL"),
+    api_key=os.getenv("LLM_API_KEY"),
+)
+modele = os.getenv("LLM_MODEL")
 
 # Une "mémoire" toute simple : la liste des dépenses enregistrées
 DEPENSES = []

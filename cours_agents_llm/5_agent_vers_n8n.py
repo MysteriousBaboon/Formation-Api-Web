@@ -15,10 +15,23 @@
 
 import os
 import json
-import requests
-from config import obtenir_client
+from pathlib import Path
 
-client, modele = obtenir_client()
+import requests
+from dotenv import load_dotenv
+from openai import OpenAI
+
+# Lit la config écrite dans le fichier .env (placé à côté de ce script)
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
+# Le client qui parle au LLM, via l'interface compatible OpenAI.
+# Par défaut on cible Anthropic (Claude) ; le .env peut pointer ailleurs
+# (OpenAI, Mistral, Ollama en local…) sans toucher au code.
+client = OpenAI(
+    base_url=os.getenv("LLM_BASE_URL"),
+    api_key=os.getenv("LLM_API_KEY"),
+)
+modele = os.getenv("LLM_MODEL")
 WEBHOOK_URL = os.getenv("N8N_WEBHOOK_URL", "").strip()
 
 

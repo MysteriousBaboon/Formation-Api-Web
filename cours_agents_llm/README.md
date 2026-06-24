@@ -26,7 +26,7 @@ cours_agents_llm/
 │   └── agents_llm.pptx
 ├── requirements.txt
 ├── .env.example              ← copie en .env (mêmes infos qu'au cours 11)
-├── config.py                 ← charge le .env et construit le client
+├── outils.py                 ← la boîte à outils des agents (calculatrice, météo…)
 ├── 1_function_calling.py     ← le LLM décide d'appeler une fonction
 ├── 2_outil_calculatrice.py   ← un outil pour ce que le LLM rate (les maths)
 ├── 3_agent_boucle_react.py   ← la boucle d'agent codée À LA MAIN (ReAct)

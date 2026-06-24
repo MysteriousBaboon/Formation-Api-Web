@@ -15,10 +15,25 @@
 # ============================================================
 
 import json
-from config import obtenir_client
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
+from openai import OpenAI
+
 from outils import obtenir_meteo
 
-client, modele = obtenir_client()
+# Lit la config écrite dans le fichier .env (placé à côté de ce script)
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
+# Le client qui parle au LLM, via l'interface compatible OpenAI.
+# Par défaut on cible Anthropic (Claude) ; le .env peut pointer ailleurs
+# (OpenAI, Mistral, Ollama en local…) sans toucher au code.
+client = OpenAI(
+    base_url=os.getenv("LLM_BASE_URL"),
+    api_key=os.getenv("LLM_API_KEY"),
+)
+modele = os.getenv("LLM_MODEL")
 
 # ------------------------------------------------------------
 # 1. Décrire l'outil au LLM (son nom, ce qu'il fait, ses paramètres)
