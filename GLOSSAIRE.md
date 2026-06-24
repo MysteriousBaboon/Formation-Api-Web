@@ -150,7 +150,6 @@ cours où la notion est abordée. Termes triés alphabétiquement dans chaque ca
 - **Excel** — Format de feuille de calcul tabulaire (`.xlsx`). _(Données)_
 - **Expression régulière (regex)** — Un motif pour rechercher/extraire du texte selon une forme. _(Données)_
 - **Filtrage** — Sélectionner les lignes d'un tableau qui respectent une condition. _(Données)_
-- **Greedy vs non-greedy** — Comportement glouton ou paresseux d'une regex (capturer le plus / le moins possible). _(Données)_
 - **Groupe de capture** — Partie d'une regex que l'on isole pour récupérer sa valeur. _(Données)_
 - **Groupe nommé** — Un groupe de capture auquel on donne un nom, pour la lisibilité. _(Données)_
 - **openpyxl** — Librairie Python pour lire et écrire des fichiers Excel. _(Données)_

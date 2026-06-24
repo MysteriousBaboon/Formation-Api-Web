@@ -60,8 +60,15 @@ class Config:
 
     @classmethod
     def embeddings_prets(cls):
-        """True si les embeddings sont configurables."""
-        return bool(cls.EMBED_BASE_URL and cls.EMBED_MODEL and cls.EMBED_API_KEY)
+        """True si un fournisseur d'embeddings VALIDE est configuré.
+
+        Anthropic ne fournit pas d'embeddings : si l'URL retombe sur
+        l'endpoint Anthropic (faute d'EMBED_BASE_URL dédié), on considère
+        que ce n'est pas prêt → l'endpoint renverra un 503 explicite.
+        """
+        if not (cls.EMBED_BASE_URL and cls.EMBED_MODEL and cls.EMBED_API_KEY):
+            return False
+        return "anthropic.com" not in cls.EMBED_BASE_URL
 
 
 config = Config()

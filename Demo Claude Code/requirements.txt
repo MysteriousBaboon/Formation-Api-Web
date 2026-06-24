@@ -1,0 +1,21 @@
+# Dépendances de la démo « tous les cours » (déjà présentes dans le .venv du repo).
+# Versions figées sur celles validées en formation (Python 3.14).
+
+Flask==3.1.3
+python-dotenv==1.2.2
+
+# API & scraping
+requests==2.34.2
+beautifulsoup4==4.14.3
+
+# Données & visualisation
+pandas==3.0.3
+openpyxl==3.1.5
+matplotlib==3.10.9
+
+# Machine learning / deep learning
+scikit-learn==1.9.0
+numpy==2.4.4
+
+# LLM & agents (interface compatible OpenAI, cible Anthropic via .env)
+openai==2.41.0

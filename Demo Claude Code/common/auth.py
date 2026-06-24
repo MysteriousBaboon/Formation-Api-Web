@@ -15,14 +15,23 @@ from config import config
 log = logging.getLogger(__name__)
 
 
+def _normaliser(valeur):
+    """Retire un éventuel préfixe 'Bearer ' et les espaces."""
+    return valeur.strip().removeprefix("Bearer ").strip()
+
+
 def require_token(view):
-    """Refuse l'accès si le Bearer token ne correspond pas à API_TOKEN."""
+    """Refuse l'accès si le Bearer token ne correspond pas à API_TOKEN.
+
+    Tolérant : le préfixe 'Bearer ' est optionnel côté header comme côté
+    configuration (le .env de la formation inclut parfois 'Bearer ').
+    """
     @wraps(view)
     def wrapper(*args, **kwargs):
         header = request.headers.get("Authorization", "")
-        if not header.startswith("Bearer "):
+        if not header.strip():
             return jsonify({"error": "Bearer token requis (header Authorization)"}), 401
-        if header.removeprefix("Bearer ").strip() != config.API_TOKEN:
+        if _normaliser(header) != _normaliser(config.API_TOKEN):
             log.warning("Tentative d'accès avec un token invalide")
             return jsonify({"error": "token invalide"}), 401
         return view(*args, **kwargs)
