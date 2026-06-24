@@ -47,13 +47,20 @@ Tu disposes de ces outils :
 - calculer[expression]  : évalue un calcul, ex. calculer[3 * 19.99]
 - meteo[ville]          : donne la météo d'une ville, ex. meteo[Lyon]
 
-À chaque tour, réponds DANS CE FORMAT, une seule action à la fois :
+À chaque tour, réponds DANS CE FORMAT, une seule action à la fois.
+
+Soit :
 Pensée: <ton raisonnement>
 Action: <nom_outil>[<argument>]
 
+Ou :
 Quand tu as la réponse, écris à la place :
 Pensée: <ton raisonnement>
 Réponse finale: <la réponse pour l'utilisateur>
+
+# Interdictions
+Tu appelle un outil OU tu reponds avec une reponse final. Tu ne peux pas faire les deux, tu dois en choisir un seul.
+Tu ne fais pas les calculs c'est l'orchestrateur de tool qui s'en occupe
 """
 
 
@@ -82,7 +89,6 @@ def agent(question, max_etapes=5):
         )
         texte = reponse.choices[0].message.content.strip()
         print(f"[étape {etape}]\n{texte}")
-
         # Cas 1 : le modèle a fini
         if "Réponse finale:" in texte:
             finale = texte.split("Réponse finale:", 1)[1].strip()
@@ -100,7 +106,7 @@ def agent(question, max_etapes=5):
         # On rejoue le tour + l'observation pour l'étape suivante
         messages.append({"role": "assistant", "content": texte})
         messages.append({"role": "user", "content": f"Observation: {observation}"})
-
+        print(messages)
     print("⏹️  Nombre d'étapes maximum atteint (garde-fou anti-boucle).")
     return None
 

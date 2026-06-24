@@ -21,6 +21,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
 
+
 from outils import obtenir_meteo
 
 # Lit la config écrite dans le fichier .env (placé à côté de ce script)
@@ -73,6 +74,7 @@ else:
     messages.append(message)   # on garde la demande dans l'historique
     for appel in message.tool_calls:
         arguments = json.loads(appel.function.arguments)
+        print(arguments)
         print(f"🛠️  Le LLM demande : {appel.function.name}({arguments})")
 
         resultat = obtenir_meteo(**arguments)   # NOTRE code exécute la fonction
@@ -89,6 +91,7 @@ else:
     reponse_finale = client.chat.completions.create(model=modele, messages=messages)
     print("\n🤖 Réponse finale :", reponse_finale.choices[0].message.content)
 
+print(messages)
 # ------------------------------------------------------------
 # 🔧 À TOI DE JOUER
 # ------------------------------------------------------------

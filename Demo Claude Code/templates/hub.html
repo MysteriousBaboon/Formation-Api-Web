@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block titre %}Démo La Dinguerie — Hub{% endblock %}
+
+{% block contenu %}
+<header class="hero">
+    <h1>🎓 Démo de tous les cours</h1>
+    <p>Une seule application Flask qui démontre les 12 modules de la formation,
+       de la théorie Python aux agents LLM. Choisis un cours pour tester ses démos en direct.</p>
+</header>
+
+<section class="grille-cours">
+    {% for c in cours %}
+    <a class="carte-cours {% if not actif(c.slug) %}inactif{% endif %}" href="/cours/{{ c.slug }}">
+        <div class="carte-tete">
+            <span class="emoji">{{ c.emoji }}</span>
+            <span class="num">Cours {{ c.numero }}</span>
+        </div>
+        <h2>{{ c.titre }}</h2>
+        <p>{{ c.resume }}</p>
+        <div class="carte-pied">
+            {% if actif(c.slug) %}
+                <span class="badge ok">{{ c.demos | length }} démo(s)</span>
+            {% else %}
+                <span class="badge attente">à venir</span>
+            {% endif %}
+        </div>
+    </a>
+    {% endfor %}
+</section>
+{% endblock %}

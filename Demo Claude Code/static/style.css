@@ -1,0 +1,121 @@
+/* ============================================================
+   style.css — Démo La Dinguerie
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background-color: #f0f4f8;
+    color: #1a202c;
+    line-height: 1.6;
+}
+
+/* --- Navigation --- */
+nav {
+    background-color: #2b6cb0;
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+nav a { color: white; text-decoration: none; font-weight: 600; }
+nav a:hover { text-decoration: underline; }
+nav .marque { margin-right: auto; font-size: 1.1rem; }
+
+/* --- Contenu --- */
+main { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; }
+
+.hero { margin-bottom: 1.5rem; }
+.hero h1 { font-size: 2rem; color: #2b6cb0; margin-bottom: 0.3rem; }
+.hero p { color: #4a5568; max-width: 70ch; }
+
+h1, h2 { color: #2b6cb0; }
+
+/* --- Grille des cours (hub) --- */
+.grille-cours {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.25rem;
+}
+.carte-cours {
+    background: white;
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+.carte-cours:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+.carte-cours.inactif { opacity: 0.6; }
+.carte-tete {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 0.5rem;
+}
+.carte-tete .emoji { font-size: 1.8rem; }
+.carte-tete .num { font-size: 0.8rem; color: #718096; font-weight: 600; }
+.carte-cours h2 { font-size: 1.15rem; margin-bottom: 0.35rem; }
+.carte-cours p { font-size: 0.9rem; color: #4a5568; flex: 1; }
+.carte-pied { margin-top: 0.75rem; }
+
+/* --- Badges --- */
+.badge {
+    display: inline-block; padding: 0.15rem 0.6rem; border-radius: 999px;
+    font-size: 0.75rem; font-weight: 700;
+}
+.badge.ok { background: #c6f6d5; color: #22543d; }
+.badge.attente { background: #edf2f7; color: #718096; }
+.badge.lock { background: #feebc8; color: #7b341e; }
+
+/* --- Cartes / sections --- */
+.card {
+    background: white; border-radius: 10px; padding: 1.5rem;
+    margin: 1.25rem 0; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.card h2 { font-size: 1.2rem; margin-bottom: 0.5rem; color: #2d3748; }
+.card .desc { color: #4a5568; margin-bottom: 0.75rem; }
+.vitrine ul { margin-left: 1.2rem; }
+.avertissement { background: #fffaf0; border-left: 4px solid #dd6b20; }
+.token-bar label { display: block; font-weight: 600; margin-bottom: 0.4rem; }
+.token-bar small { color: #718096; }
+
+/* --- Formulaires de démo --- */
+.champ { margin-bottom: 0.75rem; }
+label { font-weight: 600; display: block; margin-bottom: 0.25rem; }
+input[type="text"], input[type="number"], textarea {
+    width: 100%; padding: 0.5rem 0.75rem; border: 2px solid #cbd5e0;
+    border-radius: 6px; font-size: 0.95rem; font-family: inherit;
+}
+input:focus, textarea:focus { outline: none; border-color: #2b6cb0; }
+textarea { resize: vertical; }
+
+button {
+    background-color: #2b6cb0; color: white; border: none;
+    padding: 0.55rem 1.3rem; border-radius: 6px; font-size: 1rem;
+    font-weight: 600; cursor: pointer; margin-top: 0.25rem;
+}
+button:hover { background-color: #2c5282; }
+button:disabled { background-color: #a0aec0; cursor: progress; }
+
+code { background: #edf2f7; padding: 0.1rem 0.35rem; border-radius: 4px; color: #c53030; }
+a { color: #2b6cb0; }
+
+/* --- Zone de résultat --- */
+.resultat { margin-top: 1rem; }
+.resultat pre {
+    background: #1a202c; color: #e2e8f0; padding: 1rem; border-radius: 8px;
+    overflow-x: auto; font-size: 0.85rem; max-height: 420px;
+}
+.resultat img { max-width: 100%; border-radius: 8px; border: 1px solid #cbd5e0; }
+.resultat .err {
+    background: #fff5f5; color: #c53030; border: 1px solid #fc8181;
+    padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem;
+}
+
+footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }

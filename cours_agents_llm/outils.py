@@ -10,6 +10,9 @@ import ast
 import operator
 from datetime import datetime
 
+from flask.cli import load_dotenv
+
+load_dotenv()
 
 # ------------------------------------------------------------
 # 1. Calculatrice SÉCURISÉE

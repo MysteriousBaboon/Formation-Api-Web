@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titre %}Démo La Dinguerie{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="marque">🎓 La Dinguerie — Démo</a>
+        <a href="/health">❤️ Health</a>
+    </nav>
+
+    <main>
+        {% block contenu %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>Formation Python → IA · Démo de tous les cours · Fait avec Flask</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

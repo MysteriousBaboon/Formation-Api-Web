@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block titre %}{{ cours.titre }} — Démo La Dinguerie{% endblock %}
+
+{% block contenu %}
+{# Y a-t-il au moins une démo protégée par token ? #}
+{% set ns = namespace(auth=false) %}
+{% for d in cours.demos %}{% if d.auth %}{% set ns.auth = true %}{% endif %}{% endfor %}
+
+<p><a href="/">← Retour au hub</a></p>
+
+<header class="hero">
+    <h1>{{ cours.emoji }} {{ cours.titre }}</h1>
+    <p>{{ cours.resume }}</p>
+</header>
+
+{% if cours.vitrine %}
+<section class="card vitrine">
+    <h2>Au programme</h2>
+    <ul>
+        {% for point in cours.vitrine %}<li>{{ point }}</li>{% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+{% if ns.auth %}
+<section class="card token-bar">
+    <label for="token">🔑 Bearer token (pour les démos protégées)</label>
+    <input type="text" id="token" placeholder="API_TOKEN (.env)">
+    <small>Stocké localement dans ton navigateur. Voir <code>API_TOKEN</code> du fichier <code>.env</code>.</small>
+</section>
+{% endif %}
+
+{% if not actif %}
+<section class="card avertissement">
+    <p>⚠️ Le blueprint de ce cours n'est pas encore chargé : les démos ci-dessous
+       ne répondront pas tant qu'il n'est pas implémenté.</p>
+</section>
+{% endif %}
+
+{% for d in cours.demos %}
+<form class="card demo"
+      data-method="{{ d.methode }}"
+      data-url="{{ d.url }}"
+      data-rendu="{{ d.rendu | default('json') }}"
+      data-auth="{{ 'true' if d.auth else 'false' }}">
+    <h2>{{ d.titre }}{% if d.auth %} <span class="badge lock">🔒 token</span>{% endif %}</h2>
+    <p class="desc">{{ d.desc }}</p>
+
+    {% for champ in d.champs %}
+    <div class="champ">
+        <label>{{ champ.label }}</label>
+        {% if champ.type in ['textarea', 'json'] %}
+        <textarea name="{{ champ.nom }}" data-type="{{ champ.type }}"
+                  rows="3" placeholder="{{ champ.placeholder | default('') }}">{{ champ.defaut }}</textarea>
+        {% else %}
+        <input name="{{ champ.nom }}" type="{{ 'number' if champ.type == 'number' else 'text' }}"
+               data-type="{{ champ.type }}" value="{{ champ.defaut }}"
+               placeholder="{{ champ.placeholder | default('') }}">
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <button type="submit">▶ Lancer</button>
+    <div class="resultat" hidden></div>
+</form>
+{% endfor %}
+
+{% if not cours.demos %}
+<section class="card"><p>Pas de démo interactive pour ce cours.</p></section>
+{% endif %}
+{% endblock %}
