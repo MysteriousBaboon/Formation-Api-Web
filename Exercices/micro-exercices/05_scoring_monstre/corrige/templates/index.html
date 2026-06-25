@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🐉 Monsterdex — indice de dangerosité</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif; background: #0b1020; color: #e2e8f0;
+      min-height: 100vh; margin: 0; display: flex; flex-direction: column;
+      align-items: center; padding: 40px 16px;
+    }
+    h1 { margin: 0 0 4px; }
+    p.lead { color: #94a3b8; margin: 0 0 26px; }
+    .grille { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; align-items: flex-start; }
+    .panneau { background: #1e293b; border-radius: 16px; padding: 22px; width: 320px; }
+    label { display: block; font-size: 14px; margin: 14px 0 4px; color: #cbd5e1; }
+    input[type=text], select {
+      width: 100%; padding: 10px; border: 1px solid #475569; border-radius: 8px;
+      background: #0f172a; color: #e2e8f0;
+    }
+    input[type=range] { width: 100%; }
+    .val { color: #fbbf24; font-weight: 700; }
+    button {
+      width: 100%; margin-top: 20px; padding: 13px; font-size: 16px; font-weight: 700;
+      border: 0; border-radius: 8px; cursor: pointer; background: #7c3aed; color: white;
+    }
+    button:hover { filter: brightness(1.1); }
+    .fiche {
+      width: 320px; border-radius: 16px; padding: 24px; text-align: center;
+      color: #0b1020; animation: pop .3s ease;
+    }
+    @keyframes pop { from { transform: scale(.7); opacity: 0; } to { transform: none; opacity: 1; } }
+    .vert   { background: linear-gradient(160deg,#86efac,#22c55e); }
+    .orange { background: linear-gradient(160deg,#fde68a,#f59e0b); }
+    .rouge  { background: linear-gradient(160deg,#fca5a5,#ef4444); }
+    .fiche .emoji { font-size: 50px; }
+    .fiche .nom { font-size: 24px; font-weight: 800; }
+    .fiche .niveau { font-size: 20px; font-weight: 800; letter-spacing: 1px; margin: 6px 0; }
+    .fiche .score { font-size: 46px; font-weight: 900; }
+    .fiche .barres { text-align: left; margin-top: 14px; font-size: 14px; }
+    .fiche .barres div { margin: 3px 0; }
+    .placeholder { width: 320px; color: #475569; text-align: center; padding-top: 60px; }
+  </style>
+</head>
+<body>
+  <h1>🐉 Monsterdex</h1>
+  <p class="lead">Renseigne les stats d'un monstre et découvre son indice de dangerosité.</p>
+
+  <div class="grille">
+    <div class="panneau">
+      <label>Nom du monstre</label>
+      <input type="text" id="nom" value="Gnarrok">
+
+      <label>💪 Force : <span class="val" id="vForce">8</span></label>
+      <input type="range" id="force" min="1" max="10" value="8" oninput="vForce.textContent=this.value">
+
+      <label>⚡ Vitesse : <span class="val" id="vVitesse">7</span></label>
+      <input type="range" id="vitesse" min="1" max="10" value="7" oninput="vVitesse.textContent=this.value">
+
+      <label>📏 Taille : <span class="val" id="vTaille">7</span></label>
+      <input type="range" id="taille" min="1" max="10" value="7" oninput="vTaille.textContent=this.value">
+
+      <label>🍖 Régime</label>
+      <select id="regime">
+        <option value="carnivore">carnivore</option>
+        <option value="omnivore">omnivore</option>
+        <option value="herbivore">herbivore</option>
+      </select>
+
+      <button id="go">Évaluer la menace</button>
+    </div>
+
+    <div id="sortie"><div class="placeholder">La fiche s'affichera ici 👻</div></div>
+  </div>
+
+  <script>
+    document.getElementById("go").addEventListener("click", async () => {
+      const corps = {
+        nom: document.getElementById("nom").value,
+        force: +document.getElementById("force").value,
+        vitesse: +document.getElementById("vitesse").value,
+        taille: +document.getElementById("taille").value,
+        regime: document.getElementById("regime").value,
+      };
+      const sortie = document.getElementById("sortie");
+      try {
+        const r = await fetch("/danger", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(corps),
+        });
+        const d = await r.json();
+        if (!r.ok) { sortie.innerHTML = `<div class="placeholder">⛔ ${d.error}</div>`; return; }
+        sortie.innerHTML = `
+          <div class="fiche ${d.couleur}">
+            <div class="emoji">${d.emoji}</div>
+            <div class="nom">${d.nom}</div>
+            <div class="niveau">${d.niveau}</div>
+            <div class="score">${d.score}<span style="font-size:18px">/100</span></div>
+            <div class="barres">
+              <div>💪 Force : +${d.detail.force}</div>
+              <div>⚡ Vitesse : +${d.detail.vitesse}</div>
+              <div>📏 Taille : +${d.detail.taille}</div>
+              <div>🍖 Régime : +${d.detail.regime}</div>
+            </div>
+          </div>`;
+      } catch (e) {
+        sortie.innerHTML = `<div class="placeholder">⛔ serveur injoignable</div>`;
+      }
+    });
+  </script>
+</body>
+</html>

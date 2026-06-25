@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🦸 Bureau de recrutement des héros</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: linear-gradient(135deg, #1e3a8a, #312e81);
+      color: #f8fafc; min-height: 100vh; margin: 0;
+      display: flex; flex-direction: column; align-items: center; padding: 40px 16px;
+    }
+    h1 { margin: 0 0 4px; }
+    p.lead { color: #c7d2fe; margin: 0 0 28px; }
+    .panneau {
+      background: #1e293b; border-radius: 16px; padding: 24px;
+      width: 100%; max-width: 380px; box-shadow: 0 12px 30px rgba(0,0,0,.4);
+    }
+    label { display: block; font-size: 14px; margin: 14px 0 6px; color: #cbd5e1; }
+    input, select {
+      width: 100%; padding: 11px 12px; font-size: 15px;
+      border: 1px solid #475569; border-radius: 8px;
+      background: #0f172a; color: #f8fafc;
+    }
+    input[type=range] { padding: 0; }
+    #niveauVal { font-weight: 700; color: #fbbf24; }
+    button {
+      width: 100%; margin-top: 20px; padding: 13px; font-size: 16px; font-weight: 700;
+      border: 0; border-radius: 8px; cursor: pointer; background: #f59e0b; color: #1e293b;
+    }
+    button:hover { filter: brightness(1.08); }
+    .badge {
+      margin-top: 24px; text-align: center;
+      background: linear-gradient(160deg, #fef3c7, #fde68a); color: #1e293b;
+      border-radius: 16px; padding: 24px; width: 100%; max-width: 380px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.4); animation: pop .35s ease;
+    }
+    @keyframes pop { from { transform: scale(.6); opacity: 0; } to { transform: none; opacity: 1; } }
+    .badge .emoji { font-size: 56px; }
+    .badge .nom { font-size: 26px; font-weight: 800; margin: 4px 0; }
+    .badge .rang { display: inline-block; background: #1e293b; color: #fde68a; padding: 4px 14px; border-radius: 999px; font-weight: 700; font-size: 14px; }
+    .badge .ligne { margin-top: 12px; font-size: 15px; }
+    .badge .matricule { margin-top: 10px; font-family: monospace; letter-spacing: 2px; color: #92400e; }
+    .erreur { margin-top: 20px; background: #7f1d1d; color: #fecaca; padding: 14px; border-radius: 8px; text-align: center; width: 100%; max-width: 380px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>🦸 Bureau de recrutement</h1>
+  <p class="lead">Enregistre un nouveau héros dans la Ligue.</p>
+
+  <div class="panneau">
+    <label>Nom de code</label>
+    <input id="nom" value="Comète" autocomplete="off">
+
+    <label>Super-pouvoir</label>
+    <select id="pouvoir">
+      <option>Vol</option><option>Super-force</option><option>Invisibilité</option>
+      <option>Vitesse</option><option>Télékinésie</option><option>Rayon laser</option>
+    </select>
+
+    <label>Niveau de puissance : <span id="niveauVal">88</span></label>
+    <input id="niveau" type="range" min="1" max="100" value="88"
+           oninput="document.getElementById('niveauVal').textContent = this.value">
+
+    <label>🔑 Token d'agent</label>
+    <input id="token" value="ligue-des-heros-2026" autocomplete="off">
+
+    <button id="go">Recruter</button>
+  </div>
+
+  <div id="sortie"></div>
+
+  <script>
+    document.getElementById("go").addEventListener("click", async () => {
+      const sortie = document.getElementById("sortie");
+      const corps = {
+        nom: document.getElementById("nom").value,
+        pouvoir: document.getElementById("pouvoir").value,
+        niveau: parseInt(document.getElementById("niveau").value, 10),
+      };
+      try {
+        const r = await fetch("/recrue", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + document.getElementById("token").value,
+          },
+          body: JSON.stringify(corps),
+        });
+        const d = await r.json();
+        if (!r.ok) {
+          sortie.innerHTML = `<div class="erreur">⛔ ${r.status} — ${d.error || "erreur"}</div>`;
+          return;
+        }
+        sortie.innerHTML = `
+          <div class="badge">
+            <div class="emoji">${d.emoji}</div>
+            <div class="nom">${d.nom}</div>
+            <span class="rang">${d.rang} · niveau ${d.niveau}</span>
+            <div class="ligne">⚡ ${d.pouvoir}</div>
+            <div class="matricule">${d.matricule}</div>
+          </div>`;
+      } catch (e) {
+        sortie.innerHTML = `<div class="erreur">⛔ serveur injoignable</div>`;
+      }
+    });
+  </script>
+</body>
+</html>

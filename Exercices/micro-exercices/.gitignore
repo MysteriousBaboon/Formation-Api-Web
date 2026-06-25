@@ -1,0 +1,10 @@
+# Secrets — ne JAMAIS versionner (compétence CDA C1)
+.env
+
+# Bases SQLite générées par les exos 06 et 07
+*.db
+
+# Artefacts Python / pytest
+__pycache__/
+.pytest_cache/
+.coverage
