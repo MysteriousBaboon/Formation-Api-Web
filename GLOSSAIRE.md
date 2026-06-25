@@ -93,6 +93,10 @@ cours où la notion est abordée. Termes triés alphabétiquement dans chaque ca
 - **API** — Interface permettant à deux programmes de communiquer. _(API)_
 - **API REST** — Style d'API utilisant HTTP de façon standard (verbes, URLs, codes). _(API)_
 - **Body (corps)** — Le contenu principal d'une requête ou d'une réponse. _(API)_
+- **Cache (mise en cache)** — Garder en mémoire le résultat d'une opération coûteuse (appel d'API, requête en base) pour le réutiliser sans le recalculer. _(API)_
+- **Cache d'API** — Stocker la réponse d'une API et la resservir aux requêtes identiques, pour éviter un appel inutile et gagner en vitesse. _(API)_
+- **TTL (Time To Live)** — Durée de validité d'une donnée en cache avant qu'elle expire et soit recalculée. _(API)_
+- **Invalidation de cache** — Vider ou rafraîchir le cache quand la donnée source change, pour ne pas resservir du périmé. _(API)_
 - **Endpoint** — Une URL précise d'une API, correspondant à une action. _(API, Microservice)_
 - **En-tête (header)** — Métadonnée accompagnant une requête/réponse (type de contenu, auth…). _(API, Scraping)_
 - **Flask** — Micro-framework Python pour créer des applis web et des APIs. _(API, Microservice)_
