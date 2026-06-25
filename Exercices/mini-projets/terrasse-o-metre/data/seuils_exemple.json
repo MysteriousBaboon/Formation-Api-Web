@@ -1,0 +1,17 @@
+{
+  "_aide": "La règle métier vit ICI (pas en dur dans le code) : tu peux l'expliquer et la régler sans toucher au code.",
+  "lieu": {"ville": "Bordeaux", "latitude": 44.84, "longitude": -0.58},
+  "regles": {
+    "temperature_min_go_c": 16,
+    "temperature_ideale_c": 22,
+    "proba_pluie_max_go_pct": 30,
+    "vent_max_go_kmh": 35,
+    "plage_horaire": {"debut": 11, "fin": 22},
+    "seuil_staff_extra_c": 24
+  },
+  "messages": {
+    "go": "On sort la terrasse, belle journée en perspective.",
+    "mitige": "Terrasse possible, mais garde un œil sur le ciel.",
+    "nogo": "On reste en salle aujourd'hui, météo capricieuse."
+  }
+}

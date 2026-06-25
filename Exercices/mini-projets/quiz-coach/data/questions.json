@@ -1,0 +1,123 @@
+{
+  "titre": "Quiz — Quel·le organisateur·rice es-tu vraiment ?",
+  "intro": "8 questions, 2 minutes. À la fin : ton profil sur 4 axes + 3 conseils sur mesure.",
+  "axes": ["Organisation", "Concentration", "Énergie", "Motivation"],
+  "bareme": {
+    "max_par_axe": 100,
+    "comment_ca_marche": "Chaque réponse ajoute des points à un ou plusieurs axes. À la fin, on ramène chaque axe sur 100, puis on regarde l'axe DOMINANT pour donner le profil. En cas d'égalité, profil 'equilibre'.",
+    "profils": {
+      "Organisation": {
+        "nom": "L'Architecte",
+        "punchline": "Tu carbures aux listes, aux plans et aux cases à cocher.",
+        "force": "Tu ne perds jamais le fil.",
+        "angle_mort": "Tu peux passer plus de temps à organiser qu'à faire."
+      },
+      "Concentration": {
+        "nom": "Le Plongeur",
+        "punchline": "Quand tu rentres dans une tâche, plus rien n'existe autour.",
+        "force": "Une qualité de focus rare.",
+        "angle_mort": "Tu décroches difficilement et tu rates parfois les imprévus."
+      },
+      "Énergie": {
+        "nom": "Le Sprinteur",
+        "punchline": "Tu démarres fort, à l'instinct, sur ce qui t'allume.",
+        "force": "Une capacité à enclencher que beaucoup t'envient.",
+        "angle_mort": "Tu t'éparpilles et tu finis rarement ce que tu commences."
+      },
+      "Motivation": {
+        "nom": "Le Visionnaire",
+        "punchline": "Tu as besoin de sens avant de bouger le petit doigt.",
+        "force": "Tu portes des projets qui te tiennent vraiment à cœur.",
+        "angle_mort": "Sans 'pourquoi' clair, tu cales sur les tâches ingrates."
+      },
+      "equilibre": {
+        "nom": "Le Touche-à-tout",
+        "punchline": "Pas de dominante nette : tu t'adaptes à la situation.",
+        "force": "Polyvalence et souplesse.",
+        "angle_mort": "Tu gagnerais à assumer une vraie méthode à toi."
+      }
+    }
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "texte": "Le matin, ta première demi-heure de travail ressemble à...",
+      "options": [
+        {"id": "a", "texte": "Je liste mes 3 priorités avant de toucher quoi que ce soit", "points": {"Organisation": 25}},
+        {"id": "b", "texte": "Je fonce sur la tâche qui m'inspire le plus", "points": {"Énergie": 20, "Motivation": 10}},
+        {"id": "c", "texte": "Je me plonge dans le dossier le plus complexe d'un coup", "points": {"Concentration": 25}},
+        {"id": "d", "texte": "Je traîne un peu, le temps de me lancer", "points": {"Énergie": 5}}
+      ]
+    },
+    {
+      "id": "q2",
+      "texte": "Une notification arrive pendant que tu bosses. Tu...",
+      "options": [
+        {"id": "a", "texte": "Je ne la vois même pas, je suis ailleurs", "points": {"Concentration": 25}},
+        {"id": "b", "texte": "Je la note dans ma to-do pour plus tard", "points": {"Organisation": 20}},
+        {"id": "c", "texte": "Je réponds tout de suite, ça m'occupe", "points": {"Énergie": 10}},
+        {"id": "d", "texte": "Ça dépend si le sujet m'intéresse", "points": {"Motivation": 15}}
+      ]
+    },
+    {
+      "id": "q3",
+      "texte": "Pour qu'un projet t'emballe, il faut surtout...",
+      "options": [
+        {"id": "a", "texte": "Qu'il ait du sens, qu'il serve à quelque chose", "points": {"Motivation": 25}},
+        {"id": "b", "texte": "Qu'il soit bien cadré, avec des étapes claires", "points": {"Organisation": 20}},
+        {"id": "c", "texte": "Qu'il me laisse plonger en profondeur", "points": {"Concentration": 15}},
+        {"id": "d", "texte": "Qu'il démarre vite, j'aime l'élan du début", "points": {"Énergie": 20}}
+      ]
+    },
+    {
+      "id": "q4",
+      "texte": "Ta to-do list, dans la vraie vie, c'est...",
+      "options": [
+        {"id": "a", "texte": "Un système carré, à jour, avec des catégories", "points": {"Organisation": 25}},
+        {"id": "b", "texte": "Trois post-it que je perds régulièrement", "points": {"Énergie": 15}},
+        {"id": "c", "texte": "Tout dans ma tête, je retiens l'essentiel", "points": {"Concentration": 15, "Motivation": 5}},
+        {"id": "d", "texte": "Une liste de rêves plus que de tâches", "points": {"Motivation": 20}}
+      ]
+    },
+    {
+      "id": "q5",
+      "texte": "Un imprévu casse ta journée. Ta réaction...",
+      "options": [
+        {"id": "a", "texte": "Je replanifie tranquillement le reste", "points": {"Organisation": 25}},
+        {"id": "b", "texte": "Ça m'agace, j'étais en plein dans ma tâche", "points": {"Concentration": 20}},
+        {"id": "c", "texte": "Je rebondis, j'aime quand ça bouge", "points": {"Énergie": 20}},
+        {"id": "d", "texte": "Je relativise si ça sert le projet global", "points": {"Motivation": 15}}
+      ]
+    },
+    {
+      "id": "q6",
+      "texte": "En fin de journée, tu es le plus fier·e quand...",
+      "options": [
+        {"id": "a", "texte": "J'ai coché toutes mes cases", "points": {"Organisation": 20}},
+        {"id": "b", "texte": "J'ai avancé à fond sur UNE chose importante", "points": {"Concentration": 25}},
+        {"id": "c", "texte": "J'ai démarré plein de trucs nouveaux", "points": {"Énergie": 20}},
+        {"id": "d", "texte": "J'ai fait quelque chose qui compte vraiment", "points": {"Motivation": 20}}
+      ]
+    },
+    {
+      "id": "q7",
+      "texte": "Quand tu procrastines, c'est plutôt parce que...",
+      "options": [
+        {"id": "a", "texte": "La tâche est floue, mal découpée", "points": {"Organisation": 20}},
+        {"id": "b", "texte": "Je n'arrive pas à me mettre dans la bulle", "points": {"Concentration": 20}},
+        {"id": "c", "texte": "Je suis à plat, plus d'élan", "points": {"Énergie": 20}},
+        {"id": "d", "texte": "Je ne vois pas l'intérêt de la faire", "points": {"Motivation": 25}}
+      ]
+    },
+    {
+      "id": "q8",
+      "texte": "Le conseil productivité qui te tente le plus...",
+      "options": [
+        {"id": "a", "texte": "Un système d'organisation béton (GTD, Kanban...)", "points": {"Organisation": 25}},
+        {"id": "b", "texte": "Des sessions de deep work sans interruption", "points": {"Concentration": 25}},
+        {"id": "c", "texte": "Des sprints courts et fun (Pomodoro)", "points": {"Énergie": 20}},
+        {"id": "d", "texte": "Reconnecter chaque tâche à mon 'pourquoi'", "points": {"Motivation": 25}}
+      ]
+    }
+  ]
+}

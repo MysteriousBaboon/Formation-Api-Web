@@ -1,0 +1,11 @@
+poste,categorie,unite,prix_unitaire_eur,rendement,note
+"Préparation des surfaces (rebouchage, ponçage)",preparation,m2,8.50,,Avant toute peinture
+Sous-couche d'accrochage,preparation,m2,4.00,10,1 pot couvre ~10 m2
+Peinture murs (la couche),peinture,m2,6.00,12,1 L couvre ~12 m2 par couche
+Peinture plafond (la couche),peinture,m2,7.50,11,Plus technique que les murs
+Peinture boiseries / portes,boiserie,ml,12.00,,Au mètre linéaire
+Protection et masquage du chantier,preparation,forfait,45.00,,Bâches, adhésif, sol
+Nettoyage et repli de chantier,finition,forfait,60.00,,Fin de chantier
+Déplacement,divers,forfait,35.00,,Forfait par chantier
+Main d'oeuvre (taux horaire),divers,heure,38.00,,Estimation du temps passé
+Peinture extérieure façade (la couche),exterieur,m2,9.00,10,Sensible à la météo

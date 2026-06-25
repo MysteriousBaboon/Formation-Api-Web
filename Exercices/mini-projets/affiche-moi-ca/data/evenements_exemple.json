@@ -1,0 +1,16 @@
+{
+  "_aide": "Exemples pour tester ton générateur sans rien saisir. Propose un bouton 'Remplir avec un exemple' qui pioche ici.",
+  "exemples": [
+    {"titre": "Concert acoustique au parc", "date": "samedi 12 juillet · 19h", "lieu": "Parc des Tilleuls", "ambiance": "chaleureuse et conviviale", "type": "concert"},
+    {"titre": "Atelier poterie pour débutants", "date": "mercredi 17 juillet · 14h", "lieu": "MJC du Centre, salle 2", "ambiance": "calme et créative", "type": "atelier"},
+    {"titre": "Vide-grenier de quartier", "date": "dimanche 21 juillet · 8h-17h", "lieu": "Place de la Mairie", "ambiance": "populaire et animée", "type": "marché"},
+    {"titre": "Soirée jeux de société", "date": "vendredi 26 juillet · 20h", "lieu": "Café associatif Le Comptoir", "ambiance": "fun et décontractée", "type": "soirée"},
+    {"titre": "Ciné en plein air : Les Goonies", "date": "samedi 3 août · 21h30", "lieu": "Terrain de boules", "ambiance": "nostalgique et familiale", "type": "projection"}
+  ],
+  "palettes": [
+    {"nom": "Coucher de soleil", "fond": "#FF6B35", "texte": "#FFFFFF", "accent": "#FFD23F"},
+    {"nom": "Forêt", "fond": "#2D6A4F", "texte": "#FFFFFF", "accent": "#95D5B2"},
+    {"nom": "Nuit étoilée", "fond": "#1B263B", "texte": "#FFFFFF", "accent": "#E0AAFF"},
+    {"nom": "Bonbon", "fond": "#FFAFCC", "texte": "#3A0CA3", "accent": "#FFFFFF"}
+  ]
+}
