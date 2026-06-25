@@ -43,11 +43,18 @@ pip install -r requirements.txt
 | 07 | 🪴 Carnet de la serre | **C8 — SQL** | Un **CRUD** complet + stocker du **JSON** (le volet NoSQL) | ~1h15 | Terminal (emojis) |
 | 08 | 🍕 Partage de pizza | **C9 — Tests** | Écrire des tests `pytest` qui **attrapent un bug**, puis le corriger | ~45 min | pytest rouge→vert |
 | 09 | 🧪 Tester l'API des héros | **C9 — Tests** | Tester un endpoint Flask : **token, 400, /health** | ~45 min | pytest |
+| 10 | 🗺️ Du brief au wireframe | **C5 — Analyse** | Transformer un besoin client en **specs + maquette** (cas d'usage, wireframe) | ~1h15 | Doc + diagrammes |
+| 11 | 🏛️ Dessine l'architecture | **C6 — Architecture** | Penser **en couches** + diagramme de séquence + choix justifiés (ANSSI) | ~1h | Diagrammes Mermaid |
+| 12 | 🗃️ Modélise avant de coder | **C7 — Base de données** | **MCD/MLD** (clés, relations, normalisation) → tables SQLite + jointure | ~1h15 | SQLite + erDiagram |
+| 13 | ♿ Rends ce formulaire accessible | **C2 — Interfaces / RGAA** | Corriger un formulaire **inaccessible** (labels, contraste, clavier, alt) | ~1h | Page web + audit |
 
 > 🎓 **Compétences visées (référentiel CDA)**
 > - **C3** (logique métier sécurisée) et **C8** (accès aux données) exigent du *code visible* à l'examen → exos 03 à 07.
 > - **C9** (plans de tests) → exos 08 et 09.
+> - **C5, C6, C7, C2/RGAA** (conception & interfaces) → exos 10 à 13.
 > - Les fondamentaux (01-02) consolident la base Python indispensable au reste.
+> - 🗺️ Couverture complète des 11 compétences : voir [`../COUVERTURE_CDA.md`](../COUVERTURE_CDA.md).
+> - 🎒 Les preuves « non-code » (gestion de projet, plan de tests, transversal) : voir [`../KIT_DOSSIER_JURY.md`](../KIT_DOSSIER_JURY.md).
 
 ---
 

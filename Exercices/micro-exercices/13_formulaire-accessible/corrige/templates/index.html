@@ -1,0 +1,95 @@
+<!-- ============================================================
+     index.html — VERSION ACCESSIBLE (corrigé)
+     Les 6 péchés sont corrigés. Chaque correction est commentée.
+     ============================================================ -->
+<!DOCTYPE html>
+<!-- #6 : la langue de la page est déclarée -->
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Proposer un objet — Troc'Quartier</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 32rem; margin: 2rem auto;
+           padding: 0 1rem; color: #1a1a1a; line-height: 1.5; }
+    /* #3 : contraste suffisant (texte foncé, bordure visible) */
+    label { display: block; font-weight: 600; margin-top: 1rem; }
+    input, select, textarea { width: 100%; padding: .5rem; font-size: 1rem;
+                              border: 1px solid #555; border-radius: .25rem; }
+    .requis { color: #b00020; }
+    fieldset { border: 1px solid #999; border-radius: .4rem; margin: 0; padding: 1rem; }
+    /* #4 : vrai bouton + #bonus : focus visible net */
+    button { margin-top: 1.2rem; padding: .6rem 1.4rem; font-size: 1rem; cursor: pointer;
+             background: #1d6f42; color: #fff; border: 0; border-radius: .3rem; }
+    :focus-visible { outline: 3px solid #1d6f42; outline-offset: 2px; }
+    .erreur { color: #b00020; font-weight: 600; margin: .2rem 0 0; }
+    .skip { position: absolute; left: -999px; }
+    .skip:focus { position: static; }
+  </style>
+</head>
+<body>
+  <!-- #bonus : lien d'évitement -->
+  <a href="#form" class="skip">Aller au formulaire</a>
+
+  <!-- #5 : image avec alt descriptif (ici informative -> texte) -->
+  <img src="https://via.placeholder.com/120x40?text=Troc" width="120" height="40"
+       alt="Logo Troc'Quartier">
+  <h1>Proposer un objet</h1>
+
+  {% if succes %}
+    <p role="status">✅ Merci, ton objet est en ligne !</p>
+  {% else %}
+
+  {% if erreurs %}
+  <!-- #6 : récap d'erreurs annoncé au lecteur d'écran -->
+  <div role="alert" class="erreur">
+    Le formulaire contient {{ erreurs|length }} erreur(s). Corrige les champs indiqués.
+  </div>
+  {% endif %}
+
+  <form method="post" id="form" novalidate>
+    <fieldset>
+      <legend>Décris l'objet à prêter</legend>
+
+      <!-- #1 + #2 : <label for> relié à l'<input id> -->
+      <label for="nom">Nom de l'objet <span class="requis">(obligatoire)</span></label>
+      <input id="nom" name="nom" required aria-required="true"
+             value="{{ valeurs.nom or '' }}"
+             {% if erreurs.nom %}aria-invalid="true" aria-describedby="err-nom"{% endif %}>
+      {% if erreurs.nom %}<p class="erreur" id="err-nom" role="alert">⚠️ {{ erreurs.nom }}</p>{% endif %}
+
+      <label for="categorie">Catégorie <span class="requis">(obligatoire)</span></label>
+      <select id="categorie" name="categorie" required aria-required="true"
+              {% if erreurs.categorie %}aria-invalid="true" aria-describedby="err-cat"{% endif %}>
+        <option value="">— Choisis une catégorie —</option>
+        {% for c in categories %}
+        <option value="{{ c }}" {% if valeurs.categorie == c %}selected{% endif %}>{{ c }}</option>
+        {% endfor %}
+      </select>
+      {% if erreurs.categorie %}<p class="erreur" id="err-cat" role="alert">⚠️ {{ erreurs.categorie }}</p>{% endif %}
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="3">{{ valeurs.description or '' }}</textarea>
+
+      <label for="email">Email de contact <span class="requis">(obligatoire)</span></label>
+      <input id="email" name="email" type="email" required aria-required="true"
+             value="{{ valeurs.email or '' }}"
+             {% if erreurs.email %}aria-invalid="true" aria-describedby="err-email"{% endif %}>
+      {% if erreurs.email %}<p class="erreur" id="err-email" role="alert">⚠️ {{ erreurs.email }}</p>{% endif %}
+    </fieldset>
+
+    <p>
+      <input id="consentement" name="consentement" type="checkbox" value="oui"
+             style="width:auto" {% if valeurs.consentement %}checked{% endif %}>
+      <label for="consentement" style="display:inline; font-weight:400">
+        J'accepte d'être contacté au sujet de cet objet (RGPD).
+      </label>
+    </p>
+    {% if erreurs.consentement %}<p class="erreur" role="alert">⚠️ {{ erreurs.consentement }}</p>{% endif %}
+
+    <!-- #4 : vrai bouton, atteignable au clavier (Tab + Entrée) -->
+    <button type="submit">Publier l'objet</button>
+  </form>
+  {% endif %}
+</body>
+</html>

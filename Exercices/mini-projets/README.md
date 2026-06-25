@@ -22,6 +22,7 @@ Difficulté croissante (commence par le haut) :
 6. 🟠 🧮 [carte-bons-coins](carte-bons-coins/) — carte interactive de lieux
 7. 🔴 🧮 [factures-en-clair](factures-en-clair/) — PDF → base SQLite + JSON
 8. 🔴 🤖 [assistant-devis](assistant-devis/) — agent qui rédige un devis
+9. 🟠 🚀 [en-ligne-sans-casse](en-ligne-sans-casse/) — mettre une API en ligne (**déploiement + CI/CD**)
 
 ---
 
@@ -37,6 +38,7 @@ Difficulté croissante (commence par le haut) :
 | [carte-bons-coins](carte-bons-coins/) | 🧮 Sans IA | « Une carte de mes lieux partenaires » | data · géocodage · Plotly map · Flask | C2 C6 C7~ C8~ +transv. | ~6h 🟠 | carte interactive avec filtres + fiches |
 | [factures-en-clair](factures-en-clair/) | 🧮 Sans IA | « Range mes PDF de factures en base » | pypdf/regex · **SQLite** · **JSON** · dataviz | **C3🟥 C7 C8🟥** C9 +transv. | ~1j 🔴 | upload PDF → tableau CA + alerte TVA |
 | [assistant-devis](assistant-devis/) | 🤖 LLM + agent | « Décris un chantier, j'écris le devis » | agent ReAct · LLM · SQLite · microservice · PDF | **C3🟥** C6 C8 +transv. | ~1j 🔴 | langage naturel → devis structuré + PDF |
+| [en-ligne-sans-casse](en-ligne-sans-casse/) | 🧮 Sans IA (DevOps) | « Mets mon API en ligne sans rien casser » | déploiement Render · `render.yaml` · GitHub Actions · gunicorn | **C9 C10 C11** +transv. | ~½j 🟠 | API sur une URL publique + pipeline CI/CD |
 
 > 🟥 = compétence **« code visible »** exigée par le titre. **C3** (composants métier) est couverte par quiz-coach, terrasse, factures et assistant-devis ; **C8** (accès SQL **et** NoSQL) est couverte à fond par **factures-en-clair**, en NoSQL par thermometre-avis, en SQL par assistant-devis.
 >
@@ -82,8 +84,8 @@ mon-projet/
 └── (data/, templates/, tests…)
 ```
 
-### 5. Ce qui est volontairement laissé en **bonus**
-Le **déploiement** (C10) et la **CI/CD DevOps** (C11) sont en bonus dans chaque projet : sur une mini-presta d'une journée, on les **amorce** (cron, webhook, note Render). Tu les prouveras à fond sur le **projet fil rouge** de ton dossier. Si tu veux les travailler ici, suis `cours_microservice/deploiement_render.md` et ajoute un workflow GitHub Actions qui lance `pytest`.
+### 5. Déploiement (C10) et CI/CD DevOps (C11) — un projet dédié
+Dans les projets ci-dessus, le **déploiement** (C10) et la **CI/CD DevOps** (C11) ne sont **qu'amorcés** (cron, webhook, note Render) : sur une mini-presta d'une journée, on se concentre sur le code. Pour les prouver **à fond**, fais le projet **[en-ligne-sans-casse](en-ligne-sans-casse/)** : il prend une API déjà écrite et la met en ligne proprement (doc de déploiement réutilisable, `render.yaml`, pipeline GitHub Actions qui lance `pytest`). C'est lui qui couvre tout le **bloc BC03**. Base de référence : `../../cours_microservice/deploiement_render.md`.
 
 ---
 

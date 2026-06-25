@@ -1,0 +1,56 @@
+<!-- ============================================================
+     index.html — VERSION INACCESSIBLE (à corriger)
+     Elle cumule les 6 péchés listés dans le README.
+     Repère-les, corrige-les, puis remplis corrige/AUDIT_RGAA.md.
+     ============================================================ -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Proposer un objet</title>
+  <style>
+    body { font-family: sans-serif; max-width: 32rem; margin: 2rem auto; }
+    /* PÉCHÉ #3 : gris clair sur blanc, illisible */
+    .champ { color: #bbb; border: 1px solid #ddd; padding: .4rem; width: 100%; }
+    /* PÉCHÉ #4 : un faux bouton, inatteignable au clavier */
+    .faux-bouton { background: #cfc; color: #9c9; padding: .5rem; text-align: center;
+                   margin-top: 1rem; cursor: pointer; }
+    .err { color: red; }   /* PÉCHÉ #6 : erreur signalée par la couleur seule */
+  </style>
+</head>
+<body>
+  <!-- PÉCHÉ #5 : image sans alt -->
+  <img src="https://via.placeholder.com/120x40?text=Troc" width="120" height="40">
+  <h1>Proposer un objet</h1>
+
+  {% if succes %}
+    <p>Merci, ton objet est en ligne !</p>
+  {% else %}
+  <form method="post">
+    <!-- PÉCHÉS #1 et #2 : pas de <label>, pas d'id/for, juste un placeholder -->
+    <input class="champ" name="nom" placeholder="Nom de l'objet">
+    {% if erreurs.nom %}<span class="err">●</span>{% endif %}
+
+    <select class="champ" name="categorie">
+      <option value="">Catégorie</option>
+      {% for c in categories %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+    </select>
+    {% if erreurs.categorie %}<span class="err">●</span>{% endif %}
+
+    <textarea class="champ" name="description" placeholder="Description"></textarea>
+
+    <input class="champ" name="email" placeholder="Email de contact">
+    {% if erreurs.email %}<span class="err">●</span>{% endif %}
+
+    <div>
+      <input type="checkbox" name="consentement" value="oui">
+      J'accepte d'être contacté
+      {% if erreurs.consentement %}<span class="err">●</span>{% endif %}
+    </div>
+
+    <!-- PÉCHÉ #4 : div onclick au lieu d'un vrai bouton -->
+    <div class="faux-bouton" onclick="this.closest('form').submit()">Envoyer</div>
+  </form>
+  {% endif %}
+</body>
+</html>

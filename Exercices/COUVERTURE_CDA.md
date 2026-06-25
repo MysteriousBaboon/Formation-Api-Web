@@ -98,12 +98,13 @@ du dossier `Exercices/` = être capable de défendre le titre **haut la main**.
 
 | Artefact | Comble | Statut |
 |---|---|---|
-| `COUVERTURE_CDA.md` (ce fichier) | colonne vertébrale | ✅ livré (lot pilote) |
-| `mini-projets/en-ligne-sans-casse/` | C10 + C11 (+ C9 tableau) | ✅ livré (lot pilote) |
-| `micro-exercices/10_du-brief-au-wireframe/` | C5 | ⏳ déroulage |
-| `micro-exercices/11_dessine-architecture/` | C6 | ⏳ déroulage |
-| `micro-exercices/12_modelise-avant-de-coder/` | C7 | ⏳ déroulage |
-| `micro-exercices/13_formulaire-accessible/` | C2 / RGAA | ⏳ déroulage |
-| `KIT_DOSSIER_JURY.md` | C1, C4, C9-tableau, transversal | ⏳ déroulage |
+| `COUVERTURE_CDA.md` (ce fichier) | colonne vertébrale | ✅ livré |
+| `mini-projets/en-ligne-sans-casse/` | C10 + C11 (+ C9 tableau) | ✅ livré |
+| `micro-exercices/10_du-brief-au-wireframe/` | C5 | ✅ livré |
+| `micro-exercices/11_dessine-architecture/` | C6 | ✅ livré |
+| `micro-exercices/12_modelise-avant-de-coder/` | C7 | ✅ livré |
+| `micro-exercices/13_formulaire-accessible/` | C2 / RGAA | ✅ livré |
+| `KIT_DOSSIER_JURY.md` | C1, C4, C9-tableau, transversal | ✅ livré |
 
-> Les artefacts ⏳ sont décrits dans le plan validé ; ils sont créés après validation du **format** du lot pilote.
+> Tous les artefacts de couverture sont en place : les 11 compétences + le transversal sont
+> chacune rattachées à au moins un exercice/projet du dossier, avec une preuve défendable au jury.

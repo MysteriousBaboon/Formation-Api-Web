@@ -1,0 +1,38 @@
+# ============================================================
+# render.yaml — Infrastructure as Code (IaC) pour Render
+# ============================================================
+# C'est la brique "CD" (déploiement continu) : ce fichier décrit le
+# service au lieu de tout cliquer dans l'interface. Versionné dans Git,
+# il rend le déploiement reproductible (compétence C11).
+#
+# Place ce fichier à la RACINE de ton repo, à côté de app.py.
+# (Ici l'app est dans le sous-dossier app/ : soit tu déplaces app.py à la
+#  racine, soit tu ajoutes "rootDir: app" ci-dessous.)
+# ============================================================
+
+services:
+  - type: web
+    name: bureau-heros            # devient l'URL : bureau-heros.onrender.com
+    runtime: python
+    region: frankfurt             # proche de la France
+    plan: free                    # gratuit (s'endort après 15 min d'inactivité)
+    branch: main
+    # rootDir: app                # à dé-commenter si app.py reste dans app/
+
+    buildCommand: "pip install -r requirements.txt"
+    # gunicorn = serveur de prod (pas le serveur de dev de Flask).
+    # $PORT est imposé par Render : on s'y bind explicitement.
+    startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT"
+
+    # Render appelle cette route pour savoir si le service est vivant.
+    healthCheckPath: /health
+
+    envVars:
+      # sync: false -> la valeur N'EST PAS dans le repo, on la saisit
+      # dans le dashboard Render (un secret ne se versionne jamais).
+      - key: API_TOKEN
+        sync: false
+      - key: FLASK_DEBUG
+        value: "false"
+      - key: PYTHON_VERSION
+        value: "3.12.4"

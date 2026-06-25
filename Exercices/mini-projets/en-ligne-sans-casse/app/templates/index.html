@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bureau de recrutement de héros</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 2rem auto;
+           padding: 0 1rem; line-height: 1.5; }
+    h1 { font-size: 1.6rem; }
+    .badge { margin-top: 1rem; padding: 1rem; border: 2px solid currentColor;
+             border-radius: .5rem; }
+    label { display: block; font-weight: 600; margin-top: .8rem; }
+    input { width: 100%; padding: .5rem; font-size: 1rem; }
+    button { margin-top: 1rem; padding: .6rem 1.2rem; font-size: 1rem; cursor: pointer; }
+    .erreur { color: #b00020; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>🦸 Bureau de recrutement de héros</h1>
+  <p>Service en ligne. Vérifie son état : <a href="/health">/health</a>.</p>
+
+  <form id="form-recrue">
+    <label for="nom">Nom du héros</label>
+    <input id="nom" name="nom" required autocomplete="off">
+
+    <label for="pouvoir">Pouvoir</label>
+    <input id="pouvoir" name="pouvoir" required autocomplete="off">
+
+    <label for="niveau">Niveau (1 à 100)</label>
+    <input id="niveau" name="niveau" type="number" min="1" max="100" required>
+
+    <label for="token">Token d'accès</label>
+    <input id="token" name="token" type="password" required>
+
+    <button type="submit">Recruter</button>
+  </form>
+
+  <p id="sortie" role="status" aria-live="polite"></p>
+
+  <script>
+    const form = document.getElementById("form-recrue");
+    const sortie = document.getElementById("sortie");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      sortie.textContent = "Envoi…";
+      sortie.className = "";
+      try {
+        const r = await fetch("/recrue", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + form.token.value,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            nom: form.nom.value,
+            pouvoir: form.pouvoir.value,
+            niveau: Number(form.niveau.value)
+          })
+        });
+        const data = await r.json();
+        if (r.ok) {
+          sortie.className = "badge";
+          sortie.textContent = `${data.emoji} ${data.nom} — ${data.rang} (matricule ${data.matricule})`;
+        } else {
+          sortie.className = "erreur";
+          sortie.textContent = "Erreur " + r.status + " : " + (data.error || "inconnue");
+        }
+      } catch (err) {
+        sortie.className = "erreur";
+        sortie.textContent = "Le service ne répond pas.";
+      }
+    });
+  </script>
+</body>
+</html>
